@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block body %}
+<main>
+    <!-- A main content -->
+    <div class="container margin-home">
+        <!-- A page heading -->
+        <h1 class="text-center big-text">The department app</h1>
+        <!-- A page description -->
+        <p class="text-center margin-top description-width">This web service allows you to work with employees, their roles and departments and perform different operations to them.</p>
+        <!-- A button to start work -->
+        <div class="col text-center margin-top">
+            <a href="{{ url_for('user.show_departments') }}" class="btn btn-primary" role="button">Start work</a>
+        </div>
+    </div>
+</main>
+{% endblock %}
