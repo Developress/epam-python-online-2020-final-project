@@ -1,4 +1,4 @@
-# department_app\models\__init__.py
+# department_app/models/__init__.py
 
 # local imports
 from . import department

@@ -1,4 +1,4 @@
-# department_app\models\role.py
+# department_app/models/role.py
 
 # local imports
 from department_app import db

@@ -1,4 +1,4 @@
-# department_app\__init__.py
+# department_app/__init__.py
 
 # third-party imports
 from flask import Flask, render_template
