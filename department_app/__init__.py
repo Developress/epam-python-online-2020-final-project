@@ -34,8 +34,8 @@ def create_app(config_name):
     # needed import for initializing the db
     from department_app import models
 
-    @app.route('/')
-    def hello():
-        return render_template('home.html')
+    # register the user blueprint from views module
+    from .views import user as user_blueprint
+    app.register_blueprint(user_blueprint)
 
     return app
