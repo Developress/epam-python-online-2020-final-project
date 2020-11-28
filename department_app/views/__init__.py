@@ -3,7 +3,7 @@
 # third-party imports
 from flask import Blueprint
 
+user = Blueprint('user', __name__)
+
 # local imports
 from . import views
-
-user = Blueprint('user', __name__)
