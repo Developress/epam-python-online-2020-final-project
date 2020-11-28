@@ -2,6 +2,7 @@
 
 # third-party imports
 from flask import Flask, render_template
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 # local imports
@@ -26,6 +27,12 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
 
     db.init_app(app)
+
+    # initialize the object for migrations
+    migrate = Migrate(app, db)
+
+    # needed import for initializing the db
+    from department_app import models
 
     @app.route('/')
     def hello():
