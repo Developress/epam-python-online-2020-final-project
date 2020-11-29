@@ -12,55 +12,58 @@
         <h1 class="text-center margin-top">Employees</h1>
         {% if employees %}
             <!-- A flex container for dates panel -->
-            <div class="d-flex flex-fill justify-content-between margin-top">
-                <!-- A flex container for single date column-->
-                <div class="d-flex flex-column">
-                    <p>Select employees born on</p>
-                    <!-- A flex container for a date widget and a search button -->
-                    <div class="d-flex">
-                        <!-- The date widget -->
-                        <input id="datepicker" width="276" />
-                        <!-- A js script that invokes the datepicker -->
-                        <script>
-                            $('#datepicker').datepicker({
-                                uiLibrary: 'bootstrap4'
-                            });
-                        </script>
-                        <!-- The search button -->
-                        <div class="col text-center">
-                            <button class="btn btn-primary">Search</button>
+            <form method="post">
+                <div class="d-flex flex-fill justify-content-between margin-top">
+                    <!-- A flex container for single date column-->
+                    <div class="d-flex flex-column">
+                        <p>Select employees born on</p>
+                        <!-- A flex container for a date widget and a search button -->
+                        <div class="d-flex">
+                            <!-- The date widget -->
+                            <input id="datepicker" name="date" width="276" />
+                            <!-- A js script that invokes the datepicker -->
+                            <script>
+                                $('#datepicker').datepicker({
+                                    uiLibrary: 'bootstrap4'
+                                });
+                            </script>
+                            <!-- The search button -->
+                            <div class="col text-center">
+                                <button type="submit" value="ok" class="btn btn-primary">Search</button>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- A flex container for a date range column -->
-                <div class="d-flex flex-column">
-                    <p>Select employees born between</p>
-                    <!-- A flex container for the date range widgets and the search button -->
-                    <div class="d-flex">
-                        <!-- The date widget -->
-                        <input id="daterange-1" width="276" />
-                        <!-- The js script that invokes the datepicker -->
-                        <script>
-                            $('#daterange-1').datepicker({
-                                uiLibrary: 'bootstrap4'
-                            });
-                        </script>
-                        <!-- The date widget -->
-                        <input class="margin-left" id="daterange-2" width="276" />
-                        <!-- The js script that invokes the datepicker -->
-                        <script>
-                            $('#daterange-2').datepicker({
-                                uiLibrary: 'bootstrap4'
-                            });
-                        </script>
-                        <!-- The search button -->
-                        <div class="col text-center">
-                            <button class="btn btn-primary">Search</button>
-                        </div>
+                    <!-- A flex container for a date range column -->
+                    <div class="d-flex flex-column">
+                        <p>Select employees born between</p>
+                        <!-- A flex container for the date range widgets and the search button -->
+                        <div class="d-flex">
+                            <!-- The date widget -->
+                            <input id="daterange-1" name="start_date" width="276" />
+                            <!-- The js script that invokes the datepicker -->
+                            <script>
+                                $('#daterange-1').datepicker({
+                                    uiLibrary: 'bootstrap4'
+                                });
+                            </script>
+                            <!-- The date widget -->
+                            <input class="margin-left" name="end_date" id="daterange-2" width="276" />
+                            <!-- The js script that invokes the datepicker -->
+                            <script>
+                                $('#daterange-2').datepicker({
+                                    uiLibrary: 'bootstrap4'
+                                });
+                            </script>
+                            <!-- The search button -->
+                            <div class="col text-center">
+                                <button type="submit" value="ok" class="btn btn-primary">Search</button>
+                            </div>
+                      </div>
                   </div>
-              </div>
-            </div>
+                </div>
+            </form>
+
 
             <!-- A table with employees -->
             <table class="table table-hover table-bordered margin-top">

@@ -207,15 +207,31 @@ def delete_role(id):
     return redirect(url_for('user.show_roles'))
 
 
+@user.route('/employees/employees_born_on/<int:month>/<int:day>/<int:year>', methods=['GET', 'POST'])
+def show_employees_born_on(month, day, year):
+    date = datetime(year, month, day)
+    employees = employees_service.get_employees_born_on(date)
+    if employees.count() > 0:
+        flash(f'Success. Your employees born on {month}/{day}/{year}:')
+    else:
+        flash('Sorry, the employees with such date of birth were not found(')
+    return render_template('employees.html', title='Date search results', employees=employees)
+
+
 @user.route('/employees', methods=['GET', 'POST'])
 def show_employees():
     """
     This function renders the employees template on the /employees route
     :return: the rendered employees.html template
     """
+    if request.method == 'POST':
+        date = request.form.get('date', '')
+        if date:
+            month, day, year = date.split('/')
+            return redirect(url_for('user.show_employees_born_on', month=month, day=day, year=year))
+
     employees = employees_service.list_employees()
-    return render_template('employees.html', title='Employees',
-                           employees=employees)
+    return render_template('employees.html', title='Employees', employees=employees)
 
 
 @user.route('/employees/add', methods=['GET', 'POST'])
@@ -311,16 +327,3 @@ def delete_employee(id):
 
     # redirect to employees.html after the element is deleted
     return redirect(url_for('user.show_employees'))
-
-
-@user.route('/employees/date/<date>', methods=['GET'])
-def show_employees_born_on():
-    date = datetime.strptime(request.form.get('date', ''), '%m/%d/%Y')
-    employees = employees_service.get_employees_born_on(date)
-    if employees:
-        flash('Your search results:')
-        return render_template('employees.html', title='Employees',
-                               employees=employees)
-    else:
-        flash('Sorry, the employees with such date of birth were not found:')
-        show_employees()
