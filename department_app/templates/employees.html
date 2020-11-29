@@ -6,102 +6,101 @@
     <div class="container">
         <!-- A page heading -->
         <h1 class="text-center margin-top">Employees</h1>
-
-        <!-- A flex container for dates panel -->
-        <div class="d-flex flex-fill justify-content-between margin-top">
-            <!-- A flex container for single date column-->
-            <div class="d-flex flex-column">
-                <p>Select employees born on</p>
-                <!-- A flex container for a date widget and a search button -->
-                <div class="d-flex">
-                    <!-- The date widget -->
-                    <input id="datepicker" width="276" />
-                    <!-- A js script that invokes the datepicker -->
-                    <script>
-                        $('#datepicker').datepicker({
-                            uiLibrary: 'bootstrap4'
-                        });
-                    </script>
-                    <!-- The search button -->
-                    <div class="col text-center">
-                        <button class="btn btn-primary">Search</button>
+        {% if employees %}
+            <!-- A flex container for dates panel -->
+            <div class="d-flex flex-fill justify-content-between margin-top">
+                <!-- A flex container for single date column-->
+                <div class="d-flex flex-column">
+                    <p>Select employees born on</p>
+                    <!-- A flex container for a date widget and a search button -->
+                    <div class="d-flex">
+                        <!-- The date widget -->
+                        <input id="datepicker" width="276" />
+                        <!-- A js script that invokes the datepicker -->
+                        <script>
+                            $('#datepicker').datepicker({
+                                uiLibrary: 'bootstrap4'
+                            });
+                        </script>
+                        <!-- The search button -->
+                        <div class="col text-center">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
                     </div>
                 </div>
+
+                <!-- A flex container for a date range column -->
+                <div class="d-flex flex-column">
+                    <p>Select employees born between</p>
+                    <!-- A flex container for the date range widgets and the search button -->
+                    <div class="d-flex">
+                        <!-- The date widget -->
+                        <input id="daterange-1" width="276" />
+                        <!-- The js script that invokes the datepicker -->
+                        <script>
+                            $('#daterange-1').datepicker({
+                                uiLibrary: 'bootstrap4'
+                            });
+                        </script>
+                        <!-- The date widget -->
+                        <input class="margin-left" id="daterange-2" width="276" />
+                        <!-- The js script that invokes the datepicker -->
+                        <script>
+                            $('#daterange-2').datepicker({
+                                uiLibrary: 'bootstrap4'
+                            });
+                        </script>
+                        <!-- The search button -->
+                        <div class="col text-center">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                  </div>
+              </div>
             </div>
 
-            <!-- A flex container for a date range column -->
-            <div class="d-flex flex-column">
-                <p>Select employees born between</p>
-                <!-- A flex container for the date range widgets and the search button -->
-                <div class="d-flex">
-                    <!-- The date widget -->
-                    <input id="daterange-1" width="276" />
-                    <!-- The js script that invokes the datepicker -->
-                    <script>
-                        $('#daterange-1').datepicker({
-                            uiLibrary: 'bootstrap4'
-                        });
-                    </script>
-                    <!-- The date widget -->
-                    <input class="margin-left" id="daterange-2" width="276" />
-                    <!-- The js script that invokes the datepicker -->
-                    <script>
-                        $('#daterange-2').datepicker({
-                            uiLibrary: 'bootstrap4'
-                        });
-                    </script>
-                    <!-- The search button -->
-                    <div class="col text-center">
-                        <button class="btn btn-primary">Search</button>
-                    </div>
-              </div>
-          </div>
-        </div>
-
-        <!-- A table with employees -->
-        <table class="table table-hover table-bordered margin-top">
-            <thead>
-                <tr>
-                    <!-- The header row -->
-                    <th scope="col">Name</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Salary</th>
-                    <th scope="col">Date of birth</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Name1</th>
-                    <td>Department1</td>
-                    <td>Role1</td>
-                    <td>Salary1</td>
-                    <td>Date of birth1</td>
-                    <td><a href="employee.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">Name2</th>
-                    <td>Department2</td>
-                    <td>Role2</td>
-                    <td>Salary2</td>
-                    <td>Date of birth2</td>
-                    <td><a href="employee.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">Name3</th>
-                    <td>Department3</td>
-                    <td>Role3</td>
-                    <td>Salary3</td>
-                    <td>Date of birth3</td>
-                    <td><a href="employee.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-            </tbody>
-        </table>
+            <!-- A table with employees -->
+            <table class="table table-hover table-bordered margin-top">
+                <thead>
+                    <tr>
+                        <!-- The header row -->
+                        <th scope="col">Name</th>
+                        <th scope="col">Department</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Salary</th>
+                        <th scope="col">Date of birth</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for employee in employees %}
+                    <tr>
+                        <th scope="row">{{employee.name}}</th>
+                        <td>
+                            {% if employee.department %}
+                                {{ employee.department.name }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if employee.role %}
+                                {{ employee.role.name }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>employee.salary</td>
+                        <td>employee.date_of_birth.strftime('%d/%m/%Y')</td>
+                        <td><a href="employee.html">Edit</a></td>
+                        <td><a href="#">Delete</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3 class="text-center margin-top"><small>No employees were added</small></h3>
+        {% endif %}
         <!-- A button to add employee -->
         <div class="col text-center margin-top">
             <a href="employee.html" class="btn btn-primary" role="button">+ Add employee</a>

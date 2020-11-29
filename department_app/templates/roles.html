@@ -7,41 +7,39 @@
         <!-- A page heading -->
         <h1 class="text-center margin-top">Roles</h1>
         <!-- A table with roles -->
-        <table class="table table-hover table-bordered margin-top">
-            <thead>
-                <tr>
-                    <!-- The header row -->
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Employee count</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Name1</th>
-                    <td>Description1</td>
-                    <td>Count1</td>
-                    <td><a href="role.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">Name2</th>
-                    <td>Description2</td>
-                    <td>Count2</td>
-                    <td><a href="role.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">Name3</th>
-                    <td>Description3</td>
-                    <td>Count3</td>
-                    <td><a href="role.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-            </tbody>
-        </table>
+        {% if roles %}
+            <table class="table table-hover table-bordered margin-top">
+                <thead>
+                    <tr>
+                        <!-- The header row -->
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Employee count</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for role in roles %}
+                        <tr>
+                            <th scope="row">{{role.name}}</th>
+                            <td>{{role.description}}</td>
+                            <td>
+                                {% if role.employees %}
+                                    {{ role.employees.count() }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </td>
+                            <td><a href="role.html">Edit</a></td>
+                            <td><a href="#">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3 class="text-center margin-top"><small>No roles were added</small></h3>
+        {% endif %}
         <!-- A button to add role -->
         <div class="col text-center margin-top">
             <a href="role.html" class="btn btn-primary" role="button">+ Add role</a>

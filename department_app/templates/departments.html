@@ -7,45 +7,41 @@
         <!-- A page heading -->
         <h1 class="text-center margin-top">Departments</h1>
         <!-- A table with departments -->
-        <table class="table table-hover table-bordered margin-top">
-            <thead>
-                <tr>
-                    <!-- The header row -->
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Employee count</th>
-                    <th scope="col">Average salary</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Delete</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Name1</th>
-                    <td>Description1</td>
-                    <td>Count1</td>
-                    <td>Salary1</td>
-                    <td><a href="department.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">Name2</th>
-                    <td>Description2</td>
-                    <td>Count2</td>
-                    <td>Salary2</td>
-                    <td><a href="department.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-                <tr>
-                    <th scope="row">Name3</th>
-                    <td>Description3</td>
-                    <td>Count3</td>
-                    <td>Salary3</td>
-                    <td><a href="department.html">Edit</a></td>
-                    <td><a href="#">Delete</a></td>
-                </tr>
-            </tbody>
-        </table>
+        {% if departments %}
+            <table class="table table-hover table-bordered margin-top">
+                <thead>
+                    <tr>
+                        <!-- The header row -->
+                        <th scope="col">Name</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Employee count</th>
+                        <th scope="col">Average salary</th>
+                        <th scope="col">Edit</th>
+                        <th scope="col">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for department, average_salary in zip(departments, average_salaries) %}
+                        <tr>
+                            <th scope="row">{{department.name}}</th>
+                            <td>{{department.description}}</td>
+                            <td>
+                                {% if department.employees %}
+                                    {{ department.employees.count() }}
+                                {% else %}
+                                    0
+                                {% endif %}
+                            </td>
+                            <td>{{average_salary}}</td>
+                            <td><a href="department.html">Edit</a></td>
+                            <td><a href="#">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <h3 class="text-center margin-top"><small>No departments were added</small></h3>
+        {% endif %}
         <!-- A button to add department -->
         <div class="col text-center margin-top">
             <a href="department.html" class="btn btn-primary" role="button">+ Add department</a>
