@@ -66,5 +66,15 @@ def get_average_salary(department):
     # calculate the average value
     if len(employees) > 0:
         average_salary /= len(employees)
-    # append the average value to the list
+
     return average_salary
+
+
+def get_department_by_id(id):
+    """
+    This function is used to get the single department by id
+    :param id: the id of the department to get
+    :return: the department with the specified id
+    """
+    department = Department.query.get_or_404(id)
+    return department
