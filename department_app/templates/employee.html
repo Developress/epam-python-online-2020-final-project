@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}
+    {% if add %}
+        Add Employee
+    {% else %}
+        Edit Employee
+    {% endif %}
+{% endblock %}
+{% block body %}
+<main>
+    <!-- A main content -->
+    <div class="container">
+        <!-- A page heading -->
+        {% if add %}
+            <h1 class="text-center margin-top">Add employee</h1>
+            {% set employee_name = '' %}
+            {% set employee_salary = 0 %}
+            {% set employee_date_of_birth = '' %}
+        {% else %}
+            <h1 class="text-center margin-top">Edit employee</h1>
+            {% set employee_name = employee.name %}
+            {% set employee_salary = employee.salary %}
+            {% set employee_date_of_birth = employee.date_of_birth.strftime('%m/%d/%Y') %}
+        {% endif %}
+        <!-- A form for adding or editing the employee -->
+        <form method="post">
+            <!-- A field for the employee name -->
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name"
+                       value="{{employee_name}}" placeholder="Enter the name of the employee"
+                       required maxlength="60" autofocus>
+            </div>
+            <!-- A field for department selection -->
+            <div class="form-group">
+                <label for="department">Select the department</label>
+                <select class="form-control" id="department" name="department">
+                    {% for department in departments %}
+                        {% if employee and employee.department_id == department %}
+                            <option selected="selected" value="{{department}}">{{departments[department]}}</option>
+                        {% else %}
+                            <option value="{{department}}">{{departments[department]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- A field for role selection -->
+            <div class="form-group">
+                <label for="role">Select the role</label>
+                <select class="form-control" id="role" name="role">
+                    {% for role in roles %}
+                        {% if employee and employee.role_id == role %}
+                            <option selected="selected" value="{{role}}">{{roles[role]}}</option>
+                        {% else %}
+                            <option value="{{role}}">{{roles[role]}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- A field for the employee salary -->
+            <div class="form-group">
+                <label for="salary">Salary</label>
+                <input type="number" class="form-control" id="salary" name="salary"
+                       value="{{employee_salary}}" placeholder="Enter the salary of the employee">
+            </div>
+            <div class="form-group">
+                <label for="role">Date of birth</label>
+                <!-- The date widget -->
+                <input id="datepicker" name="date_of_birth" value="{{employee_date_of_birth}}"
+                       width="276" />
+                <!-- A js script that invokes the datepicker -->
+                <script>
+                    $('#datepicker').datepicker({
+                        uiLibrary: 'bootstrap4'
+                    });
+                </script>
+            </div>
+            <!-- A button for submitting the data-->
+            <button type="submit" value="ok" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+{% endblock %}

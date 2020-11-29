@@ -1,9 +1,13 @@
+{% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
 {% block title %}Departments{% endblock %}
 {% block body %}
 <main>
     <!-- A main content -->
     <div class="container">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
         <!-- A page heading -->
         <h1 class="text-center margin-top">Employees</h1>
         {% if employees %}
@@ -90,10 +94,10 @@
                                 -
                             {% endif %}
                         </td>
-                        <td>employee.salary</td>
-                        <td>employee.date_of_birth.strftime('%d/%m/%Y')</td>
-                        <td><a href="employee.html">Edit</a></td>
-                        <td><a href="#">Delete</a></td>
+                        <td>{{employee.salary}}</td>
+                        <td>{{employee.date_of_birth.strftime('%m/%d/%Y')}}</td>
+                        <td><a href="{{ url_for('user.edit_employee', id=employee.id) }}">Edit</a></td>
+                        <td><a href="{{ url_for('user.delete_employee', id=employee.id) }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>
@@ -103,7 +107,7 @@
         {% endif %}
         <!-- A button to add employee -->
         <div class="col text-center margin-top">
-            <a href="employee.html" class="btn btn-primary" role="button">+ Add employee</a>
+            <a href="{{ url_for('user.add_employee') }}" class="btn btn-primary" role="button">+ Add employee</a>
         </div>
     </div>
 </main>

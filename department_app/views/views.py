@@ -1,5 +1,8 @@
 # department_app/views/views.py
 
+# standard library imports
+from datetime import datetime
+
 # third-party imports
 from flask import flash, render_template, request, redirect, url_for
 
@@ -213,3 +216,111 @@ def show_employees():
     employees = employees_service.list_employees()
     return render_template('employees.html', title='Employees',
                            employees=employees)
+
+
+@user.route('/employees/add', methods=['GET', 'POST'])
+def add_employee():
+    """
+    This function represents the logic on /employees/add address
+    :return: the rendered employee.html template to add a new employee
+    """
+    # declare a flag variable which indicates which title to load 'Add' or 'Edit' at employee.html
+    add = True
+
+    # if the user submits the form
+    if request.method == 'POST':
+        # get the values from the form
+        name = request.form.get('name', '')
+        department_id = request.form.get('department', None)
+        role_id = request.form.get('role', None)
+        salary = request.form.get('salary', 0)
+        date_of_birth = datetime.strptime(request.form.get('date_of_birth', ''), '%m/%d/%Y')
+        print("----------------", name, department_id, role_id, salary, date_of_birth)
+        # if name, salary and date of birth are defined
+        if name and salary and date_of_birth:
+            try:
+                # add role to the database
+                employees_service.add_employee(name, department_id, role_id,
+                                               salary, date_of_birth)
+                flash('You have successfully added a new employee.')
+            except:
+                # in case an error occurs
+                flash('Error. Couldn\'t add an employee', 'error')
+
+            # redirect to employees.html after the element is added or not
+            return redirect(url_for('user.show_employees'))
+
+    # load employee.html template
+    departments = {department.id: department.name for department in departments_service.list_departments()}
+    roles = {role.id: role.name for role in roles_service.list_roles()}
+    return render_template('employee.html', add=add, title="Add Employee",
+                           departments=departments, roles=roles)
+
+
+@user.route('/employees/edit/<int:id>', methods=['GET', 'POST'])
+def edit_employee(id):
+    """
+    This function represents the logic on /employees/edit address
+    :return: the rendered employee.html template to edit an existing employee
+    """
+    # set add to False to display the 'Edit' title on employee.html
+    add = False
+
+    # if the user submits the form
+    if request.method == 'POST':
+        # get the values from the form
+        name = request.form.get('name', '')
+        department_id = request.form.get('department', None)
+        role_id = request.form.get('role', None)
+        salary = request.form.get('salary', 0)
+        date_of_birth = datetime.strptime(request.form.get('date_of_birth', ''), '%m/%d/%Y')
+
+        # if name, salary and date of birth are defined
+        if name and salary and date_of_birth:
+            try:
+                # update employee in the database
+                employees_service.update_employee(id, name, department_id, role_id,
+                                                  salary, date_of_birth)
+                flash('You have successfully updated the employee.')
+            except:
+                # in case an error occurs
+                flash('Error. Couldn\'t update an employee', 'error')
+
+            # redirect to employees.html after the element is updated or not
+            return redirect(url_for('user.show_employees'))
+
+    # get the employee to edit to show existing values
+    employee = employees_service.get_employee_by_id(id)
+
+    # load employee.html template
+    departments = {department.id: department.name for department in departments_service.list_departments()}
+    roles = {role.id: role.name for role in roles_service.list_roles()}
+    return render_template('employee.html', add=add, employee=employee,
+                           departments=departments, roles=roles,
+                           title="Edit Employee")
+
+
+@user.route('/employees/delete/<int:id>', methods=['GET', 'POST'])
+def delete_employee(id):
+    """
+    This function represents the logic on /employees/delete address
+    :return: the rendered employees.html template with deleted employee
+    """
+    employees_service.delete_employee(id)
+    flash('You have successfully deleted the employee.')
+
+    # redirect to employees.html after the element is deleted
+    return redirect(url_for('user.show_employees'))
+
+
+@user.route('/employees/date/<date>', methods=['GET'])
+def show_employees_born_on():
+    date = datetime.strptime(request.form.get('date', ''), '%m/%d/%Y')
+    employees = employees_service.get_employees_born_on(date)
+    if employees:
+        flash('Your search results:')
+        return render_template('employees.html', title='Employees',
+                               employees=employees)
+    else:
+        flash('Sorry, the employees with such date of birth were not found:')
+        show_employees()

@@ -78,3 +78,13 @@ def get_employees_born_between(start_date, end_date):
     """
     employees = Employee.query.filter_by(start_date < Employee.date_of_birth < end_date)
     return employees
+
+
+def get_employee_by_id(id):
+    """
+    This function is used to get the single employee by id
+    :param id: the id of the employee to get
+    :return: the employee with the specified id
+    """
+    employee = Employee.query.get_or_404(id)
+    return employee
