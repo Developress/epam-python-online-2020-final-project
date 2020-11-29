@@ -218,6 +218,19 @@ def show_employees_born_on(month, day, year):
     return render_template('employees.html', title='Date search results', employees=employees)
 
 
+@user.route('/employees/employees_born_between/<int:month1>/<int:day1>/<int:year1>-/<int:month2>/<int:day2>/<int:year2>',
+            methods=['GET', 'POST'])
+def show_employees_born_between(month1, day1, year1, month2, day2, year2):
+    start_date = datetime(year1, month1, day1)
+    end_date = datetime(year2, month2, day2)
+    employees = employees_service.get_employees_born_between(start_date, end_date)
+    if employees.count() > 0:
+        flash(f'Success. Your employees born on between {month1}/{day1}/{year1} and {month2}/{day2}/{year2}:')
+    else:
+        flash('Sorry, the employees with such dates of birth were not found(')
+    return render_template('employees.html', title='Date search results', employees=employees)
+
+
 @user.route('/employees', methods=['GET', 'POST'])
 def show_employees():
     """
@@ -226,7 +239,14 @@ def show_employees():
     """
     if request.method == 'POST':
         date = request.form.get('date', '')
-        if date:
+        start_date = request.form.get('start_date', '')
+        end_date = request.form.get('end_date', '')
+        if start_date and end_date:
+            month1, day1, year1 = start_date.split('/')
+            month2, day2, year2 = end_date.split('/')
+            return redirect(url_for('user.show_employees_born_between', month1=month1, day1=day1, year1=year1,
+                                    month2=month2, day2=day2, year2=year2))
+        elif date:
             month, day, year = date.split('/')
             return redirect(url_for('user.show_employees_born_on', month=month, day=day, year=year))
 
