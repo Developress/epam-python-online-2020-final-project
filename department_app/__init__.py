@@ -1,7 +1,8 @@
 # department_app/__init__.py
 
 # third-party imports
-from flask import Flask, render_template
+from flask import Flask
+from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -31,6 +32,8 @@ def create_app(config_name):
     # initialize the object for migrations
     migrate = Migrate(app, db)
 
+    # initialize this to display flash messages
+    Bootstrap(app)
     # needed import for initializing the db
     from department_app import models
 

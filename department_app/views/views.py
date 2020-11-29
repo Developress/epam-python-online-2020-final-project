@@ -1,7 +1,7 @@
 # department_app/views/views.py
 
 # third-party imports
-from flask import render_template, request, redirect, url_for
+from flask import flash, render_template, request, redirect, url_for
 
 # local imports
 from . import user
@@ -33,27 +33,84 @@ def show_departments():
 
 @user.route('/departments/add', methods=['GET', 'POST'])
 def add_department():
+    """
+    This function represents the logic on /departments/add address
+    :return: the rendered department.html template to add a new department
+    """
+    # declare a flag variable which indicates which title to load 'Add' or 'Edit' at department.html
     add = True
 
+    # if the user submits the form
     if request.method == 'POST':
+        # get the values from the form
         name = request.form.get('name', '')
         description = request.form.get('description', '')
+
+        # if name and description are defined
         if name and description:
             try:
                 # add department to the database
                 departments_service.add_department(name, description)
-                print("Department added")
-                # TODO add flash message success
+                flash('You have successfully added a new department.')
             except:
                 # in case department name already exists
-                # TODO add flash message error
-                print("Error")
-                pass
+                flash('Error: department name already exists.', 'error')
+
+            # redirect to departments.html after the element is added or not
             return redirect(url_for('user.show_departments'))
 
-    # load department template
+    # load department.html template
     return render_template('department.html', action="Add",
                            add=add, title="Add Department")
+
+
+@user.route('/departments/edit/<int:id>', methods=['GET', 'POST'])
+def edit_department(id):
+    """
+    This function represents the logic on /departments/edit address
+    :return: the rendered department.html template to edit an existing department
+    """
+    # set add to False to display the 'Edit' title on department.html
+    add = False
+
+    # if the user submits the form
+    if request.method == 'POST':
+        # get the values from the form
+        name = request.form.get('name', '')
+        description = request.form.get('description', '')
+
+        # if name and description are defined
+        if name and description:
+            try:
+                # update department in the database
+                departments_service.update_department(id, name, description)
+                flash('You have successfully updated the department.')
+            except:
+                # in case department name already exists
+                flash('Error. Couldn\'t update the department', 'error')
+
+            # redirect to departments.html after the element is updated or not
+            return redirect(url_for('user.show_departments'))
+
+    # get the department to edit to show existing values
+    department = departments_service.get_department_by_id(id)
+
+    # load department.html template
+    return render_template('department.html', action="Edit",
+                           add=add, department=department, title="Edit Department")
+
+
+@user.route('/departments/delete/<int:id>', methods=['GET', 'POST'])
+def delete_department(id):
+    """
+    This function represents the logic on /departments/delete address
+    :return: the rendered departments.html template with deleted department
+    """
+    departments_service.delete_department(id)
+    flash('You have successfully deleted the department.')
+
+    # redirect to departments.html after the element is deleted
+    return redirect(url_for('user.show_departments'))
 
 
 @user.route('/roles', methods=['GET', 'POST'])

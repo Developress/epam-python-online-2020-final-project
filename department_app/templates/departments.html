@@ -1,9 +1,13 @@
+{% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
 {% block title %}Departments{% endblock %}
 {% block body %}
 <main>
     <!-- A main content -->
     <div class="container">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
         <!-- A page heading -->
         <h1 class="text-center margin-top">Departments</h1>
         <!-- A table with departments -->
@@ -33,8 +37,8 @@
                                 {% endif %}
                             </td>
                             <td>{{get_average_salary(department)}}</td>
-                            <td><a href="department.html">Edit</a></td>
-                            <td><a href="#">Delete</a></td>
+                            <td><a href="{{ url_for('user.edit_department', id=department.id) }}">Edit</a></td>
+                            <td><a href="{{ url_for('user.delete_department', id=department.id) }}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
