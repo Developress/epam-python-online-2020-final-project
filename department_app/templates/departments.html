@@ -21,7 +21,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for department, average_salary in zip(departments, average_salaries) %}
+                    {% for department in departments %}
                         <tr>
                             <th scope="row">{{department.name}}</th>
                             <td>{{department.description}}</td>
@@ -32,7 +32,7 @@
                                     0
                                 {% endif %}
                             </td>
-                            <td>{{average_salary}}</td>
+                            <td>{{get_average_salary(department)}}</td>
                             <td><a href="department.html">Edit</a></td>
                             <td><a href="#">Delete</a></td>
                         </tr>
@@ -44,7 +44,7 @@
         {% endif %}
         <!-- A button to add department -->
         <div class="col text-center margin-top">
-            <a href="department.html" class="btn btn-primary" role="button">+ Add department</a>
+            <a href="{{ url_for('user.add_department') }}" class="btn btn-primary" role="button">+ Add department</a>
         </div>
     </div>
 </main>

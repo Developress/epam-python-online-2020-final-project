@@ -50,30 +50,21 @@ def delete_department(id):
     db.session.commit()
 
 
-def get_average_salaries():
+def get_average_salary(department):
     """
-    This function is used to get average salaries for all departments
-    :return: the list of average salaries from all departments
+    This function is used to get average salary of the department
+    :return: the average salary of the department
     """
-    # declare a list with average salaries
-    average_salaries = []
-    # get all the departments
-    departments = list_departments()
+    employees = Employee.query.filter_by(department_id=department.id).all()
+    # declare a variable for average salary
+    average_salary = 0
 
-    for department in departments:
-        # get all the employees from a specified department
-        employees = Employee.query.filter_by(department_id=department.id).all()
-        # declare a variable for average salary
-        average_salary = 0
+    for employee in employees:
+        # sum all the salaries from the department
+        average_salary += employee.salary
 
-        for employee in employees:
-            # sum all the salaries from the department
-            average_salary += employee.salary
-
-        # calculate the average value
+    # calculate the average value
+    if len(employees) > 0:
         average_salary /= len(employees)
-        # append the average value to the list
-        average_salaries.append(average_salary)
-
-    return average_salaries
-
+    # append the average value to the list
+    return average_salary
