@@ -47,3 +47,13 @@ def delete_role(id):
     role = Role.query.get_or_404(id)
     db.session.delete(role)
     db.session.commit()
+
+
+def get_role_by_id(id):
+    """
+    This function is used to get the single role by id
+    :param id: the id of the role to get
+    :return: the role with the specified id
+    """
+    role = Role.query.get_or_404(id)
+    return role

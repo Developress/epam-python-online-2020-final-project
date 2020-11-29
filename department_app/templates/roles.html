@@ -1,9 +1,13 @@
+{% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
 {% block title %}Roles{% endblock %}
 {% block body %}
 <main>
     <!-- A main content -->
     <div class="container">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
         <!-- A page heading -->
         <h1 class="text-center margin-top">Roles</h1>
         <!-- A table with roles -->
@@ -31,8 +35,8 @@
                                     0
                                 {% endif %}
                             </td>
-                            <td><a href="role.html">Edit</a></td>
-                            <td><a href="#">Delete</a></td>
+                            <td><a href="{{ url_for('user.edit_role', id=role.id) }}">Edit</a></td>
+                            <td><a href="{{ url_for('user.delete_role', id=role.id) }}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -42,7 +46,7 @@
         {% endif %}
         <!-- A button to add role -->
         <div class="col text-center margin-top">
-            <a href="role.html" class="btn btn-primary" role="button">+ Add role</a>
+            <a href="{{ url_for('user.add_role') }}" class="btn btn-primary" role="button">+ Add role</a>
         </div>
     </div>
 </main>
