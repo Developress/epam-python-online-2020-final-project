@@ -31,13 +31,13 @@
                             <th scope="row">{{department['name']}}</th>
                             <td>{{department['description']}}</td>
                             <td>
-                                <!-- {% if department.employees %}
-                                    {{ department.employees.count() }}
-                                {% else %} -->
+                                {% if department['employees'] %}
+                                    {{ department['employees'] | length }}
+                                {% else %}
                                     0
-                                <!-- {% endif %} -->
+                                {% endif %}
                             </td>
-                            <td> 0 </td>
+                            <td> {{get_average_salary(department)}} </td>
                             <td><a href="{{ url_for('user.edit_department', id=department['id']) }}">Edit</a></td>
                             <td><a href="{{ url_for('user.delete_department', id=department['id']) }}">Delete</a></td>
                         </tr>

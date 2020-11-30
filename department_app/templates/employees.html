@@ -83,25 +83,25 @@
                 <tbody>
                     {% for employee in employees %}
                     <tr>
-                        <th scope="row">{{employee.name}}</th>
+                        <th scope="row">{{employee['name']}}</th>
                         <td>
-                            {% if employee.department %}
-                                {{ employee.department.name }}
+                            {% if employee['department_id'] %}
+                                {{ employee['department_id'] }}
                             {% else %}
                                 -
                             {% endif %}
                         </td>
                         <td>
-                            {% if employee.role %}
-                                {{ employee.role.name }}
+                            {% if employee['role_id'] %}
+                                {{ employee['role_id'] }}
                             {% else %}
                                 -
                             {% endif %}
                         </td>
-                        <td>{{employee.salary}}</td>
-                        <td>{{employee.date_of_birth.strftime('%m/%d/%Y')}}</td>
-                        <td><a href="{{ url_for('user.edit_employee', id=employee.id) }}">Edit</a></td>
-                        <td><a href="{{ url_for('user.delete_employee', id=employee.id) }}">Delete</a></td>
+                        <td>{{employee['salary']}}</td>
+                        <td>{{employee['date_of_birth']}}</td>
+                        <td><a href="{{ url_for('user.edit_employee', id=employee['id']) }}">Edit</a></td>
+                        <td><a href="{{ url_for('user.delete_employee', id=employee['id']) }}">Delete</a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

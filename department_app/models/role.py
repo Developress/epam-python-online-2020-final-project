@@ -28,7 +28,8 @@ class Role(db.Model):
         """
         return {
             'id': self.id, 'name': self.name,
-            'description': self.description
+            'description': self.description,
+            'employees': [employee.json() for employee in self.employees]
         }
 
     def __repr__(self):

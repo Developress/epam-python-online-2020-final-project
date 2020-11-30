@@ -18,8 +18,8 @@
             {% set role_description = ''%}
         {% else %}
             <h1 class="text-center margin-top">Edit role</h1>
-            {% set role_name = role.name %}
-            {% set role_description = role.description %}
+            {% set role_name = role['name'] %}
+            {% set role_description = role['description'] %}
         {% endif %}
         <!-- A form for adding or editing the role -->
         <form method="post">

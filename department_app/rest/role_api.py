@@ -33,7 +33,7 @@ class RoleList(Resource):
         This method is called when GET request is sent
         :return: the list of all roles in json format
         """
-        return jsonify({'Roles': roles_service.get_roles()})
+        return jsonify(roles_service.get_roles())
 
     def post(self):
         """

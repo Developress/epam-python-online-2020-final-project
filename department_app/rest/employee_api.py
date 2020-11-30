@@ -37,7 +37,7 @@ class EmployeeList(Resource):
         This method is called when GET request is sent
         :return: the list of all employees in json format
         """
-        return jsonify({'Roles': employees_service.get_employees()})
+        return jsonify(employees_service.get_employees())
 
     def post(self):
         """

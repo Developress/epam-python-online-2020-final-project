@@ -55,7 +55,7 @@ def get_average_salary(department):
     This function is used to get average salary of the department
     :return: the average salary of the department
     """
-    employees = Employee.query.filter_by(department_id=department.id).all()
+    employees = Employee.query.filter_by(department_id=department['id']).all()
     # declare a variable for average salary
     average_salary = 0
 

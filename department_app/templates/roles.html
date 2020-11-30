@@ -27,17 +27,17 @@
                 <tbody>
                     {% for role in roles %}
                         <tr>
-                            <th scope="row">{{role.name}}</th>
-                            <td>{{role.description}}</td>
+                            <th scope="row">{{role['name']}}</th>
+                            <td>{{role['description']}}</td>
                             <td>
-                                {% if role.employees %}
-                                    {{ role.employees.count() }}
+                                {% if role['employees'] %}
+                                    {{ role['employees'] | length }}
                                 {% else %}
                                     0
                                 {% endif %}
                             </td>
-                            <td><a href="{{ url_for('user.edit_role', id=role.id) }}">Edit</a></td>
-                            <td><a href="{{ url_for('user.delete_role', id=role.id) }}">Delete</a></td>
+                            <td><a href="{{ url_for('user.edit_role', id=role['id']) }}">Edit</a></td>
+                            <td><a href="{{ url_for('user.delete_role', id=role['id']) }}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

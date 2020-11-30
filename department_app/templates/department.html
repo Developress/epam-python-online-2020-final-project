@@ -18,8 +18,8 @@
             {% set department_description = ''%}
         {% else %}
             <h1 class="text-center margin-top">Edit department</h1>
-            {% set department_name = department.name %}
-            {% set department_description = department.description %}
+            {% set department_name = department['name'] %}
+            {% set department_description = department['description'] %}
         {% endif %}
         <!-- A form for adding or editing the department -->
         <form method="post">
