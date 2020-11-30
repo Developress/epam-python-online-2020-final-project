@@ -25,6 +25,17 @@ class Employee(db.Model):
     salary = db.Column(db.Integer)
     date_of_birth = db.Column(db.Date)
 
+    def json(self):
+        """
+        This method is used to return the employee in json format
+        :return: the employee in json format
+        """
+        return {
+            'id': self.id, 'name': self.name,
+            'department_id': self.department_id, 'role_id': self.role_id,
+            'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
+        }
+
     def __repr__(self):
         """
         The representation of the employee
