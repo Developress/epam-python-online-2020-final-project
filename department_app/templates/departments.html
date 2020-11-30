@@ -1,3 +1,4 @@
+<!-- department_app/templates/departments.html -->
 {% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
 {% block title %}Departments{% endblock %}
@@ -27,18 +28,18 @@
                 <tbody>
                     {% for department in departments %}
                         <tr>
-                            <th scope="row">{{department.name}}</th>
-                            <td>{{department.description}}</td>
+                            <th scope="row">{{department['name']}}</th>
+                            <td>{{department['description']}}</td>
                             <td>
-                                {% if department.employees %}
+                                <!-- {% if department.employees %}
                                     {{ department.employees.count() }}
-                                {% else %}
+                                {% else %} -->
                                     0
-                                {% endif %}
+                                <!-- {% endif %} -->
                             </td>
-                            <td>{{get_average_salary(department)}}</td>
-                            <td><a href="{{ url_for('user.edit_department', id=department.id) }}">Edit</a></td>
-                            <td><a href="{{ url_for('user.delete_department', id=department.id) }}">Delete</a></td>
+                            <td> 0 </td>
+                            <td><a href="{{ url_for('user.edit_department', id=department['id']) }}">Edit</a></td>
+                            <td><a href="{{ url_for('user.delete_department', id=department['id']) }}">Delete</a></td>
                         </tr>
                     {% endfor %}
                 </tbody>
