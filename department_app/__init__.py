@@ -24,6 +24,11 @@ def create_app(config_name):
     # The instance folder is located outside the department_app package and can hold local data
     # that shouldn't be committed to version control, such as configuration secrets and the database file.
     app = Flask(__name__, instance_relative_config=True)
+
+    # to create an api and register the routes
+    from .rest import create_api
+    api = create_api(app)
+
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
 
