@@ -33,7 +33,7 @@ class DepartmentList(Resource):
         This method is called when GET request is sent
         :return: the list of all departments in json format
         """
-        return jsonify({'Departments': departments_service.get_departments()})
+        return jsonify(departments_service.get_departments())
 
     def post(self):
         """

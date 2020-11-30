@@ -19,15 +19,15 @@ def create_api(app):
     api = Api(app)
 
     # adding the department resources
-    api.add_resource(department_api.DepartmentList, '/departments')
-    api.add_resource(department_api.Department, '/departments/<id>')
+    api.add_resource(department_api.DepartmentList, '/api/departments')
+    api.add_resource(department_api.Department, '/api/departments/<id>')
 
     # adding the role resources
-    api.add_resource(role_api.RoleList, '/roles')
-    api.add_resource(role_api.Role, '/roles/<id>')
+    api.add_resource(role_api.RoleList, '/api/roles')
+    api.add_resource(role_api.Role, '/api/roles/<id>')
 
     # adding the employee resources
-    api.add_resource(employee_api.EmployeeList, '/employees')
-    api.add_resource(employee_api.Employee, '/employees/<id>')
+    api.add_resource(employee_api.EmployeeList, '/api/employees')
+    api.add_resource(employee_api.Employee, '/api/employees/<id>')
 
     return api
