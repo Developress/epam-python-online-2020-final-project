@@ -1,8 +1,12 @@
 # department_app/rest/__init__.py
 
 # third-party imports
-from . import department_api
 from flask_restful import Api
+
+# local imports
+from . import department_api
+from . import role_api
+from . import employee_api
 
 
 def create_api(app):
@@ -18,4 +22,12 @@ def create_api(app):
     api.add_resource(department_api.DepartmentList, '/departments')
     api.add_resource(department_api.Department, '/departments/<id>')
 
-    return Api(app)
+    # adding the role resources
+    api.add_resource(role_api.RoleList, '/roles')
+    api.add_resource(role_api.Role, '/roles/<id>')
+
+    # adding the employee resources
+    api.add_resource(employee_api.EmployeeList, '/employees')
+    api.add_resource(employee_api.Employee, '/employees/<id>')
+
+    return api
