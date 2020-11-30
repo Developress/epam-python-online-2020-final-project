@@ -6,13 +6,13 @@ from ..models.department import Department
 from ..models.employee import Employee
 
 
-def list_departments():
+def get_departments():
     """
     This function is used to select all records from departments table
     :return: the list of all departments
     """
     departments = Department.query.all()
-    return departments
+    return [department.json() for department in departments]
 
 
 def add_department(name, description):
@@ -77,4 +77,4 @@ def get_department_by_id(id):
     :return: the department with the specified id
     """
     department = Department.query.get_or_404(id)
-    return department
+    return department.json()
