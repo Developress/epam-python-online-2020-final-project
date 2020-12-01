@@ -5,6 +5,7 @@ from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
 
 # local imports
 from config import app_config  # dictionary, keys of which are names of config, and values - the appropriate classes
@@ -24,7 +25,7 @@ def create_app(config_name):
     # The instance folder is located outside the department_app package and can hold local data
     # that shouldn't be committed to version control, such as configuration secrets and the database file.
     app = Flask(__name__, instance_relative_config=True)
-
+    CORS(app)
     # to create an api and register the routes
     from .rest import create_api
     api = create_api(app)
