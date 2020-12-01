@@ -37,7 +37,7 @@
                 <label for="department">Select the department</label>
                 <select class="form-control" id="department" name="department">
                     {% for department in departments %}
-                        {% if employee and employee.department_id == department %}
+                        {% if employee and employee['department'] == department['name'] %}
                             <option selected="selected" value="{{department}}">{{departments[department]}}</option>
                         {% else %}
                             <option value="{{department}}">{{departments[department]}}</option>
@@ -50,7 +50,7 @@
                 <label for="role">Select the role</label>
                 <select class="form-control" id="role" name="role">
                     {% for role in roles %}
-                        {% if employee and employee.role_id == role %}
+                        {% if employee and employee['role'] == role['name'] %}
                             <option selected="selected" value="{{role}}">{{roles[role]}}</option>
                         {% else %}
                             <option value="{{role}}">{{roles[role]}}</option>
