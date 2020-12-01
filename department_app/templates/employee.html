@@ -19,9 +19,9 @@
             {% set employee_date_of_birth = '' %}
         {% else %}
             <h1 class="text-center margin-top">Edit employee</h1>
-            {% set employee_name = employee.name %}
-            {% set employee_salary = employee.salary %}
-            {% set employee_date_of_birth = employee.date_of_birth.strftime('%m/%d/%Y') %}
+            {% set employee_name = employee['name'] %}
+            {% set employee_salary = employee['salary'] %}
+            {% set employee_date_of_birth = employee['date_of_birth'] %}
         {% endif %}
         <!-- A form for adding or editing the employee -->
         <form method="post">

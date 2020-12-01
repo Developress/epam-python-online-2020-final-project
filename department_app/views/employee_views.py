@@ -91,7 +91,7 @@ def edit_employee(id):
                            employee=employee, departments=departments, roles=roles)
 
 
-@user.route('/departments/delete/<int:id>', methods=['GET', 'POST'])
+@user.route('/employees/delete/<int:id>', methods=['GET', 'POST'])
 def delete_employee(id):
     """
     This function represents the logic on /employees/delete address

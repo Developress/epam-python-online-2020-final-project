@@ -12,8 +12,8 @@ parser = reqparse.RequestParser()
 
 # define the arguments which will be in a request query
 parser.add_argument('name')
-parser.add_argument('department_id')
-parser.add_argument('role_id')
+parser.add_argument('department')
+parser.add_argument('role')
 parser.add_argument('salary')
 parser.add_argument('date_of_birth')
 
@@ -45,8 +45,8 @@ class EmployeeList(Resource):
         :return: the 'Employee added' response with status code 201
         """
         args = parser.parse_args()
-        employees_service.add_employee(args['name'], args['department_id'],
-                                       args['role_id'], args['salary'],
+        employees_service.add_employee(args['name'], args['department'],
+                                       args['role'], args['salary'],
                                        args['date_of_birth'])
         return "Employee added", 201
 
@@ -72,8 +72,8 @@ class Employee(Resource):
         args = parser.parse_args()
         employee = employees_service.get_employee_by_id(id)
         employees_service.update_employee(id, args.get('name', employee['name']),
-                                          args.get('department_id', employee['department_id']),
-                                          args.get('role_id', employee['role_id']), args.get('salary', employee['salary']),
+                                          args.get('department', employee['department']),
+                                          args.get('role', employee['role']), args.get('salary', employee['salary']),
                                           args.get('date_of_birth', employee['date_of_birth']))
         return "Employee updated", 200
 

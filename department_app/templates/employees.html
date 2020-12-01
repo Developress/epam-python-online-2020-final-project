@@ -85,15 +85,15 @@
                     <tr>
                         <th scope="row">{{employee['name']}}</th>
                         <td>
-                            {% if employee['department_id'] %}
-                                {{ employee['department_id'] }}
+                            {% if employee['department'] %}
+                                {{ employee['department'] }}
                             {% else %}
                                 -
                             {% endif %}
                         </td>
                         <td>
-                            {% if employee['role_id'] %}
-                                {{ employee['role_id'] }}
+                            {% if employee['role'] %}
+                                {{ employee['role'] }}
                             {% else %}
                                 -
                             {% endif %}

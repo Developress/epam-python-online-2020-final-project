@@ -2,7 +2,8 @@
 
 # local imports
 from department_app import db
-
+from .department import Department
+from .role import Role
 
 class Employee(db.Model):
     """
@@ -32,7 +33,8 @@ class Employee(db.Model):
         """
         return {
             'id': self.id, 'name': self.name,
-            'department_id': self.department_id, 'role_id': self.role_id,
+            'department': Department.query.get_or_404(self.department_id).name,
+            'role': Role.query.get_or_404(self.role_id).name,
             'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
         }
 
