@@ -7,7 +7,6 @@ from flask import render_template
 user = Blueprint('user', __name__)
 
 # local imports
-from . import views
 from . import department_views
 from . import role_views
 from . import employee_views
