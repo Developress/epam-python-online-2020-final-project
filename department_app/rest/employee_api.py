@@ -1,7 +1,7 @@
 # department_app/rest/employee_api.py
 
 # third-party imports
-from flask import abort, jsonify
+from flask import abort, jsonify, request
 from flask_restful import reqparse, Resource
 
 # local imports
@@ -37,6 +37,14 @@ class EmployeeList(Resource):
         This method is called when GET request is sent
         :return: the list of all employees in json format
         """
+        args = request.args
+
+        if len(args) == 2:
+            return jsonify(employees_service.get_employees_born_between(start_date=args['start_date'],
+                                                                        end_date=args['end_date']))
+        elif len(args) == 1:
+            return jsonify(employees_service.get_employees_born_on(date=args['date']))
+
         return jsonify(employees_service.get_employees())
 
     def post(self):
