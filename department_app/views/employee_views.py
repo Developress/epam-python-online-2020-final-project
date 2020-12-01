@@ -15,14 +15,27 @@ from ..service.roles import get_roles
 from ..service.employees import get_employee_by_id
 
 
-@user.route('/employees', methods=['GET'])
+@user.route('/employees', methods=['GET', 'POST'])
 def show_employees():
     """
     This function renders the employees template on the /employees route
     :return: the rendered employees.html template
     """
-    # send a request to api
-    employees = requests.get('http://localhost:5000/api/employees')
+    if request.method == 'POST':
+        if request.form['date']:
+            params = {'date': "'" + str(request.form['date']) + "'"}
+            employees = requests.get('http://localhost:5000/api/employees', params=params)
+            flash(f"Success. Your employees born on {params['date']}:")
+        else:
+            params = {'start_date': "'" + str(request.form['start_date']) + "'",
+                      'end_date': "'" + str(request.form['end_date']) + "'"}
+            employees = requests.get('http://localhost:5000/api/employees', params=params)
+            flash(f"Success. Your employees born between {params['start_date']} and {params['end_date']}:")
+
+    else:
+        # send a request to api
+        employees = requests.get('http://localhost:5000/api/employees')
+
     employees = unicodedata.normalize('NFKD', employees.text).encode('ascii', 'ignore')
     # decode json
     employees = json.loads(employees)
@@ -54,8 +67,12 @@ def add_employee():
         # redirect to employees.html after the element is added or not
         return redirect(url_for('user.show_employees'))
 
+    departments = {department['id']: department['name'] for department in get_departments()}
+    roles = {role['id']: role['name'] for role in get_roles()}
+
     # load employee.html template
-    return render_template('employee.html', add=add, title="Add Employee")
+    return render_template('employee.html', add=add, title="Add Employee",
+                           departments=departments, roles=roles)
 
 
 @user.route('/employees/edit/<int:id>', methods=['GET', 'POST'])
@@ -102,3 +119,18 @@ def delete_employee(id):
 
     # redirect to employees.html after the element is deleted
     return redirect(url_for('user.show_employees'))
+
+
+def show_employees_born_on(date):
+    """
+    This function renders the employees template on the /employees route
+    :return: the rendered employees.html template
+    """
+    # send a request to api
+    employees = requests.get('http://localhost:5000/api/employees', params=date)
+    employees = unicodedata.normalize('NFKD', employees.text).encode('ascii', 'ignore')
+    # decode json
+    employees = json.loads(employees)
+    print(employees)
+    return render_template('employees.html', title='Employees',
+                           employees=employees)
