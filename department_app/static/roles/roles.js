@@ -8,7 +8,7 @@ fetch("http://localhost:5000/api/roles")
     .catch((error) => console.log(error))
 
 function responseReceived(data){
-    // if the department list is empty
+    // if the role list is empty
     if(data.length == 0){
         // set set to empty element to indicate that the department list is empty
         let empty = document.getElementById("empty");
