@@ -67,8 +67,8 @@ function generateTableHead(table, headers) {
     // create the table row
     let row = thead.insertRow();
     // push edit and delete values to the headers array
-    data.push('Edit');
-    data.push('Delete');
+    headers.push('Edit');
+    headers.push('Delete');
     for (let key of headers) {
         // create a table header element and fill it with data
         let th = document.createElement("th");
