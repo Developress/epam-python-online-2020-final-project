@@ -13,7 +13,7 @@ def show_departments():
     This function renders the departments template on the /departments route
     :return: the rendered departments.html template
     """
-    return render_template('departments/departments.html')
+    return render_template('departments/departments.html', title='Departments')
 
 
 @user.route('/departments/add', methods=['GET'])
