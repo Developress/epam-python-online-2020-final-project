@@ -5,6 +5,7 @@ from department_app import db
 from .department import Department
 from .role import Role
 
+
 class Employee(db.Model):
     """
     Create an employee table
