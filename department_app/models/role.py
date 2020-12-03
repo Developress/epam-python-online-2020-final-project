@@ -18,8 +18,19 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60), unique=True)
     description = db.Column(db.String(200))
-    employees = db.relationship('Employee', backref='department',
+    employees = db.relationship('Employee', backref='role',
                                 lazy='dynamic')
+
+    def json(self):
+        """
+        This method is used to return the role in json format
+        :return: the role in json format
+        """
+        return {
+            'id': self.id, 'name': self.name,
+            'description': self.description,
+            'employees': [employee.json() for employee in self.employees]
+        }
 
     def __repr__(self):
         """

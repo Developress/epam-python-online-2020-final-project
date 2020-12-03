@@ -5,13 +5,13 @@ from department_app import db
 from ..models.role import Role
 
 
-def list_roles():
+def get_roles():
     """
     This function is used to select all records from roles table
     :return: the list of all roles
     """
     roles = Role.query.all()
-    return roles
+    return [role.json() for role in roles]
 
 
 def add_role(name, description):
@@ -47,3 +47,13 @@ def delete_role(id):
     role = Role.query.get_or_404(id)
     db.session.delete(role)
     db.session.commit()
+
+
+def get_role_by_id(id):
+    """
+    This function is used to get the single role by id
+    :param id: the id of the role to get
+    :return: the role with the specified id
+    """
+    role = Role.query.get_or_404(id)
+    return role.json()

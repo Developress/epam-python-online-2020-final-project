@@ -21,6 +21,17 @@ class Department(db.Model):
     employees = db.relationship('Employee', backref='department',
                                 lazy='dynamic')
 
+    def json(self):
+        """
+        This method is used to return the department in json format
+        :return: the department in json format
+        """
+        return {
+            'id': self.id, 'name': self.name,
+            'description': self.description,
+            'employees': [employee.json() for employee in self.employees]
+        }
+
     def __repr__(self):
         """
         The representation of the department

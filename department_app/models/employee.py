@@ -2,7 +2,8 @@
 
 # local imports
 from department_app import db
-
+from .department import Department
+from .role import Role
 
 class Employee(db.Model):
     """
@@ -24,6 +25,18 @@ class Employee(db.Model):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     salary = db.Column(db.Integer)
     date_of_birth = db.Column(db.Date)
+
+    def json(self):
+        """
+        This method is used to return the employee in json format
+        :return: the employee in json format
+        """
+        return {
+            'id': self.id, 'name': self.name,
+            'department': Department.query.get_or_404(self.department_id).name,
+            'role': Role.query.get_or_404(self.role_id).name,
+            'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
+        }
 
     def __repr__(self):
         """
