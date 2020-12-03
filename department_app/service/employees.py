@@ -46,7 +46,7 @@ def update_employee(id, name, surname, department_id, salary, date_of_birth):
     employee = Employee.query.get_or_404(id)
     employee.name = name
     employee.surname = surname
-    employee.department_id = department_id
+    employee.department_id = department_id if department_id != '' else None
     employee.salary = salary
     date_of_birth = datetime.strptime(date_of_birth, '%m/%d/%Y')
     employee.date_of_birth = date_of_birth

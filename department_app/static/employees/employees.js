@@ -33,6 +33,9 @@ function formDataToDisplay(data) {
         // get the element of data array
         let object = data[i];
         // form an object which will be represented in table
+        if(object['department'] === null){
+            object['department'] = '-'
+        }
         let employee = {
             'id': object['id'],
             'Name': object['name'],

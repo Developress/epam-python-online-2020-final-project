@@ -38,8 +38,9 @@ function setValues(data){
     let salary = document.getElementById('salary');
     salary.setAttribute('value', data['salary']);
     // get the date of birth input and set a value to it
-    let date_of_birth = document.getElementById('date_of_birth');
-    date_of_birth.setAttribute('value', data['date_of_birth']);
+    let date_of_birth = document.getElementById('datepicker');
+    date_of_birth.value = data['date_of_birth'];
+    console.log(date_of_birth.value)
 }
 
 function createDropDownList(){
@@ -80,6 +81,9 @@ function onSubmitClicked(){
     let salary = document.getElementById('salary');
     let date_of_birth = document.getElementById('datepicker');
     // form a body for post or put request
+    if (department.value === ''){
+        department.setAttribute('value', null)
+    }
     data = {
         'name': name.value,
         'surname': surname.value,
@@ -87,6 +91,7 @@ function onSubmitClicked(){
         'salary': salary.value,
         'date_of_birth': date_of_birth.value
     }
+    console.log(data)
     // if we are adding the element
     if(add){
         fetch(`http://localhost:5000/api/employees`, {
