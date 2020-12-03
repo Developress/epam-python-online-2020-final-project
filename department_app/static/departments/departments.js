@@ -1,5 +1,5 @@
 // perform a GET request to receive all the departments
-fetch("http://localhost:5000/api/departments")
+fetch("http://ec2-52-206-188-118.compute-1.amazonaws.com/api/departments")
     .then((response) => response.json())
     .then((data)=> {
         // if the request was successful, call the function
