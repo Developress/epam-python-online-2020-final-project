@@ -73,3 +73,4 @@ def delete_employee(id):
 
     # redirect to employees.html after the element is deleted
     return redirect(url_for('user.show_employees'))
+

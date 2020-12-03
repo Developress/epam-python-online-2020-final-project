@@ -4,6 +4,8 @@
 {% block title %}Departments{% endblock %}
 {% block body %}
 <main>
+    <!-- A script which will be executed when the page is loaded -->
+    <script src="{{ url_for('static', filename='employees/employees.js') }}"></script>
     <!-- A main content -->
     <div class="container">
         <br/>
@@ -12,7 +14,7 @@
         <!-- A page heading -->
         <h1 class="text-center margin-top">Employees</h1>
         <!-- A flex container for dates panel -->
-        <div class="d-flex flex-fill justify-content-between margin-top">
+        <div id="dates" class="d-flex flex-fill justify-content-between margin-top" >
             <!-- A flex container for single date column-->
             <div class="d-flex flex-column">
                 <p>Select employees born on</p>
@@ -28,7 +30,7 @@
                     </script>
                     <!-- The search button -->
                     <div class="col text-center">
-                        <button type="submit" value="ok" class="btn btn-primary">Search</button>
+                        <button type="submit" value="ok" onclick="getEmployeesBornOn()" class="btn btn-primary">Search</button>
                     </div>
                 </div>
             </div>
@@ -39,24 +41,24 @@
                 <!-- A flex container for the date range widgets and the search button -->
                 <div class="d-flex">
                     <!-- The date widget -->
-                    <input id="daterange-1" name="start_date" width="276" />
+                    <input id="start_date" name="start_date" width="276" />
                     <!-- The js script that invokes the datepicker -->
                     <script>
-                        $('#daterange-1').datepicker({
+                        $('#start_date').datepicker({
                             uiLibrary: 'bootstrap4'
                         });
                     </script>
                     <!-- The date widget -->
-                    <input class="margin-left" name="end_date" id="daterange-2" width="276" />
+                    <input class="margin-left" name="end_date" id="end_date" width="276" />
                     <!-- The js script that invokes the datepicker -->
                     <script>
-                        $('#daterange-2').datepicker({
+                        $('#end_date').datepicker({
                             uiLibrary: 'bootstrap4'
                         });
                     </script>
                     <!-- The search button -->
                     <div class="col text-center">
-                        <button type="submit" value="ok" class="btn btn-primary">Search</button>
+                        <button type="submit" value="ok" onclick="getEmployeesBornBetween()" class="btn btn-primary">Search</button>
                     </div>
               </div>
           </div>
@@ -72,7 +74,5 @@
             <a href="{{ url_for('user.add_employee') }}" class="btn btn-primary" role="button">+ Add employee</a>
         </div>
     </div>
-    <!-- A script which will be executed when the page is loaded -->
-    <script src="{{ url_for('static', filename='employees/employees.js') }}"></script>
 </main>
 {% endblock %}

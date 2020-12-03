@@ -9,10 +9,10 @@ fetch("http://localhost:5000/api/employees")
 
 function responseReceived(data){
     // if the employee list is empty
-    if(data.length == 0){
+    if(data.length === 0){
         // set set to empty element to indicate that the employee list is empty
-        let empty = document.getElementById("empty");
-        let text = document.createTextNode("No employees were found");
+        let empty = document.getElementById('empty');
+        let text = document.createTextNode('No employees were found');
         empty.appendChild(text);
     } else {
         // get the data which will be displayed in table
@@ -110,6 +110,59 @@ function sendDeleteRequest(id){
         .then((data)=> {
             // when the response is received, redirect to the given page
             window.location.href = `/employees/delete/${id}`;
+        })
+        .catch((error) => console.log(error))
+}
+
+function getEmployeesBornOn(){
+    let datepicker = document.getElementById('datepicker');
+    let date = "'" + datepicker.value + "'";
+    let table = document.querySelector("table");
+    while (table.rows.length > 0 ) {
+        table.deleteRow(0);
+    }
+    fetch('http://localhost:5000/api/employees?date=' + date)
+        .then((response) => response.json())
+        .then((data)=> {
+            console.log(data);
+            if (data.length > 0){
+                let h1 = document.querySelector("h1");
+                h1.innerHTML = "Search results";
+                let dataToDisplay = formDataToDisplay(data);
+                // get the table to display data
+                let table = document.querySelector("table");
+                // generate table, passing the table element, table data, and table headers
+                generateTable(table, dataToDisplay, Object.keys(dataToDisplay[0]));
+                generateTableHead(table, Object.keys(dataToDisplay[0]).slice(1));
+            }
+
+        })
+        .catch((error) => console.log(error))
+}
+
+function getEmployeesBornBetween(){
+    let datepicker_start = document.getElementById('start_date');
+    let datepicker_end = document.getElementById('end_date');
+    let start_date = "'" + datepicker_start.value + "'";
+    let end_date = "'" + datepicker_end.value + "'";
+    let table = document.querySelector("table");
+    while (table.rows.length > 0 ) {
+        table.deleteRow(0);
+    }
+    fetch('http://localhost:5000/api/employees?start_date=' + start_date + "&end_date=" + end_date)
+        .then((response) => response.json())
+        .then((data)=> {
+            console.log(data);
+            if (data.length > 0){
+                let h1 = document.querySelector("h1");
+                h1.innerHTML = "Search results";
+                let dataToDisplay = formDataToDisplay(data);
+                // get the table to display data
+                let table = document.querySelector("table");
+                // generate table, passing the table element, table data, and table headers
+                generateTable(table, dataToDisplay, Object.keys(dataToDisplay[0]));
+                generateTableHead(table, Object.keys(dataToDisplay[0]).slice(1));
+            }
         })
         .catch((error) => console.log(error))
 }
