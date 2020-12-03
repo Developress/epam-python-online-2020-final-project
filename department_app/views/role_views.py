@@ -10,7 +10,6 @@ from flask import flash, render_template, request, redirect, url_for
 
 # local imports
 from . import user
-from ..service.roles import get_role_by_id
 
 
 @user.route('/roles', methods=['GET'])
@@ -19,16 +18,10 @@ def show_roles():
     This function renders the roles template on the /roles route
     :return: the rendered roles.html template
     """
-    # send a request to api
-    roles = requests.get('http://localhost:5000/api/roles')
-    roles = unicodedata.normalize('NFKD', roles.text).encode('ascii', 'ignore')
-    # decode json
-    roles = json.loads(roles)
-    return render_template('roles.html', title='Roles',
-                           roles=roles)
+    return render_template('roles/roles.html', title='Roles')
 
 
-@user.route('/roles/add', methods=['GET', 'POST'])
+@user.route('/roles/add', methods=['GET'])
 def add_role():
     """
     This function represents the logic on /roles/add address
@@ -37,25 +30,21 @@ def add_role():
     # declare a flag variable which indicates which title to load 'Add' or 'Edit' at role.html
     add = True
 
-    # if the user submits the form
-    if request.method == 'POST':
-        # send a request to api
-        response = requests.post('http://localhost:5000/api/roles', params=request.form)
-        # if operation ended successfully
-        if response.status_code == 201:
-            flash('You have successfully added a new role.')
-        else:
-            # in case role name already exists
-            flash('Error: role name already exists.', 'error')
+    # get the added argument if the form is submitted
+    added = request.args.get("added")
 
-        # redirect to roles.html after the element is added or not
+    if added is not None:
+        # form a flash message
+        flash('You have successfully added the role.')
+
+        # redirect to roles.html after the element is added
         return redirect(url_for('user.show_roles'))
 
     # load role.html template
-    return render_template('role.html', add=add, title="Add Role")
+    return render_template('roles/role.html', add=add, title="Add Role")
 
 
-@user.route('/roles/edit/<int:id>', methods=['GET', 'POST'])
+@user.route('/roles/edit/<int:id>', methods=['GET'])
 def edit_role(id):
     """
     This function represents the logic on /roles/edit address
@@ -64,35 +53,27 @@ def edit_role(id):
     # set add to False to display the 'Edit' title on role.html
     add = False
 
-    # if the user submits the form
-    if request.method == 'POST':
-        # get the values from the form
-        response = requests.put(f'http://localhost:5000/api/roles/{id}', params=request.form)
-        # if name and description are defined
-        if response.status_code == 200:
-            flash('You have successfully updated the role.')
-        else:
-            # in case role name already exists
-            flash('Error. Couldn\'t update the role', 'error')
+    # get the edited argument if the form is submitted
+    edited = request.args.get("edited")
 
-        # redirect to roles.html after the element is updated or not
+    if edited is not None:
+        # form a flash message
+        flash('You have successfully edited the role.')
+
+        # redirect to roles.html after the element is edited
         return redirect(url_for('user.show_roles'))
 
-    # get the department to edit to show existing values
-    role = get_role_by_id(id)
-
     # load role.html template
-    return render_template('department.html', add=add,
-                           role=role, title="Edit Role")
+    return render_template('roles/role.html', add=add, title="Edit Role")
 
 
-@user.route('/roles/delete/<int:id>', methods=['GET', 'POST'])
+@user.route('/roles/delete/<int:id>', methods=['GET'])
 def delete_role(id):
     """
     This function represents the logic on /roles/delete address
     :return: the rendered roles.html template with deleted role
     """
-    requests.delete(f'http://localhost:5000/api/roles/{id}')
+    # form a flash message
     flash('You have successfully deleted the role.')
 
     # redirect to roles.html after the element is deleted
