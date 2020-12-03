@@ -1,0 +1,28 @@
+<!-- department_app/templates/departments.html -->
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Departments{% endblock %}
+{% block body %}
+<main>
+    <!-- A main content -->
+    <div class="container">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <!-- A page heading -->
+        <h1 class="text-center margin-top">Departments</h1>
+        <!-- A table with departments -->
+        <table class="table table-hover table-bordered margin-top">
+        </table>
+
+        <h3 class="text-center margin-top"><small id="empty"></small></h3>
+
+        <!-- A button to add department -->
+        <div class="col text-center margin-top">
+            <a href="{{ url_for('user.add_department') }}" class="btn btn-primary" role="button">+ Add department</a>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='departments.js') }}">
+    </script>
+</main>
+{% endblock %}
