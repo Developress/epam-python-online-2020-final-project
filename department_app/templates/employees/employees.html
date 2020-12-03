@@ -1,0 +1,78 @@
+<!-- department_app/templates/employees.html -->
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Departments{% endblock %}
+{% block body %}
+<main>
+    <!-- A main content -->
+    <div class="container">
+        <br/>
+        {{ utils.flashed_messages() }}
+        <br/>
+        <!-- A page heading -->
+        <h1 class="text-center margin-top">Employees</h1>
+        <!-- A flex container for dates panel -->
+        <div class="d-flex flex-fill justify-content-between margin-top">
+            <!-- A flex container for single date column-->
+            <div class="d-flex flex-column">
+                <p>Select employees born on</p>
+                <!-- A flex container for a date widget and a search button -->
+                <div class="d-flex">
+                    <!-- The date widget -->
+                    <input id="datepicker" name="date" width="276" />
+                    <!-- A js script that invokes the datepicker -->
+                    <script>
+                        $('#datepicker').datepicker({
+                            uiLibrary: 'bootstrap4'
+                        });
+                    </script>
+                    <!-- The search button -->
+                    <div class="col text-center">
+                        <button type="submit" value="ok" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- A flex container for a date range column -->
+            <div class="d-flex flex-column">
+                <p>Select employees born between</p>
+                <!-- A flex container for the date range widgets and the search button -->
+                <div class="d-flex">
+                    <!-- The date widget -->
+                    <input id="daterange-1" name="start_date" width="276" />
+                    <!-- The js script that invokes the datepicker -->
+                    <script>
+                        $('#daterange-1').datepicker({
+                            uiLibrary: 'bootstrap4'
+                        });
+                    </script>
+                    <!-- The date widget -->
+                    <input class="margin-left" name="end_date" id="daterange-2" width="276" />
+                    <!-- The js script that invokes the datepicker -->
+                    <script>
+                        $('#daterange-2').datepicker({
+                            uiLibrary: 'bootstrap4'
+                        });
+                    </script>
+                    <!-- The search button -->
+                    <div class="col text-center">
+                        <button type="submit" value="ok" class="btn btn-primary">Search</button>
+                    </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- A text field to display when there are no employees -->
+        <h3 class="text-center margin-top"><small id="empty"></small></h3>
+        <!-- A table with employees -->
+        <table class="table table-hover table-bordered margin-top">
+        </table>
+        <!-- A button to add employee -->
+        <div class="col text-center margin-top">
+            <a href="{{ url_for('user.add_employee') }}" class="btn btn-primary" role="button">+ Add employee</a>
+        </div>
+    </div>
+    <!-- A script which will be executed when the page is loaded -->
+    <script src="{{ url_for('static', filename='employees/employees.js') }}"></script>
+</main>
+{% endblock %}

@@ -20,27 +20,7 @@ def show_employees():
     This function renders the employees template on the /employees route
     :return: the rendered employees.html template
     """
-    if request.method == 'POST':
-        if request.form['date']:
-            params = {'date': "'" + str(request.form['date']) + "'"}
-            employees = requests.get('http://localhost:5000/api/employees', params=params)
-            flash(f"Success. Your employees born on {params['date']}:")
-        else:
-            params = {'start_date': "'" + str(request.form['start_date']) + "'",
-                      'end_date': "'" + str(request.form['end_date']) + "'"}
-            employees = requests.get('http://localhost:5000/api/employees', params=params)
-            flash(f"Success. Your employees born between {params['start_date']} and {params['end_date']}:")
-
-    else:
-        # send a request to api
-        employees = requests.get('http://localhost:5000/api/employees')
-
-    employees = unicodedata.normalize('NFKD', employees.text).encode('ascii', 'ignore')
-    # decode json
-    employees = json.loads(employees)
-    print(employees)
-    return render_template('employees.html', title='Employees',
-                           employees=employees)
+    return render_template('employees/employees.html', title='Employees')
 
 
 @user.route('/employees/add', methods=['GET', 'POST'])
