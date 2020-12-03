@@ -3,7 +3,6 @@
 # local imports
 from department_app import db
 from .department import Department
-from .role import Role
 
 
 class Employee(db.Model):
@@ -23,7 +22,6 @@ class Employee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     salary = db.Column(db.Integer)
     date_of_birth = db.Column(db.Date)
 
@@ -35,7 +33,6 @@ class Employee(db.Model):
         return {
             'id': self.id, 'name': self.name,
             'department': Department.query.get_or_404(self.department_id).name,
-            'role': Role.query.get_or_404(self.role_id).name,
             'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
         }
 

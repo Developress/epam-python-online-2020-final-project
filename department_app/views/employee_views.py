@@ -11,7 +11,6 @@ from flask import flash, render_template, request, redirect, url_for
 # local imports
 from . import user
 from ..service.departments import get_departments
-from ..service.roles import get_roles
 from ..service.employees import get_employee_by_id
 
 
