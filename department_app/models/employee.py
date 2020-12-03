@@ -11,8 +11,8 @@ class Employee(db.Model):
     Fields:
         id: the unique identifier of the employee, primary key
         name: the name of the employee
+        surname: the surname of the employee
         department_id: the id of related department, foreign key to departments.id
-        role_id: the id of related role, foreign key to roles.id
         salary: the salary of the employee
         date_of_birth: the date of birth of the employee
     """
@@ -21,6 +21,7 @@ class Employee(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(60))
+    surname = db.Column(db.String(60))
     department_id = db.Column(db.Integer, db.ForeignKey('departments.id'))
     salary = db.Column(db.Integer)
     date_of_birth = db.Column(db.Date)
@@ -31,7 +32,7 @@ class Employee(db.Model):
         :return: the employee in json format
         """
         return {
-            'id': self.id, 'name': self.name,
+            'id': self.id, 'name': self.name, 'surname': self.surname,
             'department': Department.query.get_or_404(self.department_id).name,
             'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
         }
@@ -41,4 +42,4 @@ class Employee(db.Model):
         The representation of the employee
         :return: the string, representing the employee by his name
         """
-        return '<Employee: {}>'.format(self.name)
+        return '<Employee: {}>'.format(self.name + " " + self.surname)
