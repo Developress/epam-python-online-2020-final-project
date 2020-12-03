@@ -14,15 +14,14 @@
         <!-- A table with departments -->
         <table class="table table-hover table-bordered margin-top">
         </table>
-
+        <!-- A text field to display when there are no departments -->
         <h3 class="text-center margin-top"><small id="empty"></small></h3>
-
         <!-- A button to add department -->
         <div class="col text-center margin-top">
             <a href="{{ url_for('user.add_department') }}" class="btn btn-primary" role="button">+ Add department</a>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='departments.js') }}">
-    </script>
+    <!-- A script which will be executed when the page is loaded -->
+    <script src="{{ url_for('static', filename='departments/departments.js') }}"></script>
 </main>
 {% endblock %}
