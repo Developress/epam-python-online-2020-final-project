@@ -93,4 +93,4 @@ class Employee(Resource):
         """
         abort_if_employee_doesnt_exist(id)
         employees_service.delete_employee(id)
-        return '', 204
+        return 'Employee deleted', 200
