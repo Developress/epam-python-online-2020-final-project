@@ -1,16 +1,10 @@
 # department_app/views/department_views.py
 
-# standard library imports
-import json
-import requests
-import unicodedata
-
 # third-party imports
 from flask import flash, render_template, request, redirect, url_for
 
 # local imports
 from . import user
-from ..service.departments import get_average_salary, get_department_by_id
 
 
 @user.route('/departments', methods=['GET'])
@@ -19,17 +13,10 @@ def show_departments():
     This function renders the departments template on the /departments route
     :return: the rendered departments.html template
     """
-    # send a request to api
-    departments = requests.get('http://localhost:5000/api/departments')
-    departments = unicodedata.normalize('NFKD', departments.text).encode('ascii', 'ignore')
-    # decode json
-    departments = json.loads(departments)
-    return render_template('departments.html', title='Departments',
-                           departments=departments,
-                           get_average_salary=get_average_salary)
+    return render_template('departments/departments.html')
 
 
-@user.route('/departments/add', methods=['GET', 'POST'])
+@user.route('/departments/add', methods=['GET'])
 def add_department():
     """
     This function represents the logic on /departments/add address
@@ -38,25 +25,21 @@ def add_department():
     # declare a flag variable which indicates which title to load 'Add' or 'Edit' at department.html
     add = True
 
-    # if the user submits the form
-    if request.method == 'POST':
-        # send a request to api
-        response = requests.post('http://localhost:5000/api/departments', params=request.form)
-        # if operation ended successfully
-        if response.status_code == 201:
-            flash('You have successfully added a new department.')
-        else:
-            # in case department name already exists
-            flash('Error: department name already exists.', 'error')
+    # get the added argument if the form is submitted
+    added = request.args.get("added")
 
-        # redirect to departments.html after the element is added or not
+    if added is not None:
+        # form a flash message
+        flash('You have successfully added the department.')
+
+        # redirect to departments.html after the element is added
         return redirect(url_for('user.show_departments'))
 
     # load department.html template
-    return render_template('department.html', add=add, title="Add Department")
+    return render_template('departments/department.html', add=add, title="Add Department")
 
 
-@user.route('/departments/edit/<int:id>', methods=['GET', 'POST'])
+@user.route('/departments/edit/<int:id>', methods=['GET'])
 def edit_department(id):
     """
     This function represents the logic on /departments/edit address
@@ -65,35 +48,27 @@ def edit_department(id):
     # set add to False to display the 'Edit' title on department.html
     add = False
 
-    # if the user submits the form
-    if request.method == 'POST':
-        # get the values from the form
-        response = requests.put(f'http://localhost:5000/api/departments/{id}', params=request.form)
-        # if name and description are defined
-        if response.status_code == 200:
-            flash('You have successfully updated the department.')
-        else:
-            # in case department name already exists
-            flash('Error. Couldn\'t update the department', 'error')
+    # get the edited argument if the form is submitted
+    edited = request.args.get("edited")
 
-        # redirect to departments.html after the element is updated or not
+    if edited is not None:
+        # form a flash message
+        flash('You have successfully edited the department.')
+
+        # redirect to departments.html after the element is edited
         return redirect(url_for('user.show_departments'))
 
-    # get the department to edit to show existing values
-    department = get_department_by_id(id)
-
     # load department.html template
-    return render_template('department.html', add=add,
-                           department=department, title="Edit Department")
+    return render_template('departments/department.html', add=add, title="Edit Department")
 
 
-@user.route('/departments/delete/<int:id>', methods=['GET', 'POST'])
+@user.route('/departments/delete/<int:id>', methods=['GET'])
 def delete_department(id):
     """
     This function represents the logic on /departments/delete address
     :return: the rendered departments.html template with deleted department
     """
-    requests.delete(f'http://localhost:5000/api/departments/{id}')
+    # form a flash message
     flash('You have successfully deleted the department.')
 
     # redirect to departments.html after the element is deleted
