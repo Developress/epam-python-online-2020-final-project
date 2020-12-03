@@ -1,5 +1,5 @@
-// perform a GET request to receive all the departments
-fetch("http://localhost:5000/api/departments")
+// perform a GET request to receive all the roles
+fetch("http://localhost:5000/api/roles")
     .then((response) => response.json())
     .then((data)=> {
         // if the request was successful, call the function
@@ -12,7 +12,7 @@ function responseReceived(data){
     if(data.length == 0){
         // set set to empty element to indicate that the department list is empty
         let empty = document.getElementById("empty");
-        let text = document.createTextNode("No departments were found");
+        let text = document.createTextNode("No roles were found");
         empty.appendChild(text);
     } else {
         // get the data which will be displayed in table
@@ -32,31 +32,17 @@ function formDataToDisplay(data) {
     for(let i = 0; i < data.length; i++){
         // get the element of data array
         let object = data[i];
-        // get the amount of employees related to the current department
+        // get the amount of employees related to the current role
         let employeeCount = object['employees'].length;
-        // declare a variable which will store the average salary of the current department
-        let averageSalary = 0;
-        // if employee list is not empty
-        if(employeeCount > 0){
-            for(let j = 0; j < object['employees'].length; j++){
-                // get the employee from employee list
-                employee = object['employees'][j];
-                // add the employee's salary to the current sum
-                averageSalary += employee['salary'];
-            }
-            // calculate the average salary
-            averageSalary /= employeeCount;
-        }
         // form an object which will be represented in table
-        let department = {
+        let role = {
             'id': object['id'],
             'Name': object['name'],
             'Description': object['description'],
-            'Employee count': employeeCount,
-            'Average salary': averageSalary
+            'Employee count': employeeCount
         }
         // push an object to the array
-        dataToDisplay.push(department);
+        dataToDisplay.push(role);
     }
     return dataToDisplay;
 }
@@ -95,7 +81,7 @@ function generateTable(table, data, keys) {
         let cell = row.insertCell();
         let a = document.createElement("a");
         // specify the hyperlink for the element
-        a.setAttribute("href", `/departments/edit/${element['id']}`);
+        a.setAttribute("href", `/roles/edit/${element['id']}`);
         // bound the text of link and join the element to the table row
         let text = document.createTextNode("Edit");
         a.appendChild(text);
@@ -116,14 +102,14 @@ function generateTable(table, data, keys) {
 }
 
 function sendDeleteRequest(id){
-    // perform a DELETE request to delete the specific department
-    fetch(`http://localhost:5000/api/departments/${id}`, {
+    // perform a DELETE request to delete the specific role
+    fetch(`http://localhost:5000/api/roles/${id}`, {
             method: 'DELETE'
         })
         .then((response) => response.json())
         .then((data)=> {
             // when the response is received, redirect to the given page
-            window.location.href = `/departments/delete/${id}`;
+            window.location.href = `/roles/delete/${id}`;
         })
         .catch((error) => console.log(error))
 }

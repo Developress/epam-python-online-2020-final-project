@@ -1,14 +1,14 @@
-// declare the needed globals, id - for the id of department being edited,
-// add - to indicate whether the department is being adding or editing
+// declare the needed globals, id - for the id of role being edited,
+// add - to indicate whether the role is being adding or editing
 let id = 0;
 let add = true;
 
-if(document.title === "Edit Department"){
+if(document.title === "Edit Role"){
     add = false;
     // get the id, which will be the last element of url
     id = document.URL.substring(document.URL.lastIndexOf('/') + 1);
-    // perform a GET request to receive the needed department
-    fetch(`http://localhost:5000/api/departments/${id}`)
+    // perform a GET request to receive the needed role
+    fetch(`http://localhost:5000/api/roles/${id}`)
         .then((response) => response.json())
         .then((data)=> {
             // set the input values
@@ -38,7 +38,7 @@ function onSubmitClicked(){
     }
     // if we are adding the element
     if(add){
-        fetch(`http://localhost:5000/api/departments`, {
+        fetch(`http://localhost:5000/api/roles`, {
                 method: 'POST',
                 headers: {
                   'Accept': 'application/json',
@@ -49,11 +49,11 @@ function onSubmitClicked(){
             .then((response) => response.json())
             .then((data)=> {
                 // redirect to another page
-                window.location = '/departments/add?added=' + true;
+                window.location = '/roles/add?added=' + true;
             })
             .catch((error) => console.log(error))
     } else {
-        fetch(`http://localhost:5000/api/departments/${id}`, {
+        fetch(`http://localhost:5000/api/roles/${id}`, {
                 method: 'PUT',
                 headers: {
                   'Accept': 'application/json',
@@ -64,7 +64,7 @@ function onSubmitClicked(){
             .then((response) => response.json())
             .then((data)=> {
                 // redirect to another page
-                window.location = `/departments/edit/${id}?edited=` + true;
+                window.location = `/roles/edit/${id}?edited=` + true;
             })
             .catch((error) => console.log(error))
     }
