@@ -75,4 +75,4 @@ class Department(Resource):
         """
         abort_if_department_doesnt_exist(id)
         departments_service.delete_department(id)
-        return '', 204
+        return 'Department deleted', 200
