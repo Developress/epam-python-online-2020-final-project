@@ -17,36 +17,36 @@ def get_employees():
     return [employee.json() for employee in employees]
 
 
-def add_employee(name, department_id, role_id, salary, date_of_birth):
+def add_employee(name, surname, department_id, salary, date_of_birth):
     """
     This function is used to add a new employee to employees table
     :param name: the name of the employee
+    :param surname: the surname of the employee
     :param department_id: the id of the related department
-    :param role_id: the id of the related role
     :param salary: the salary of the employee
     :param date_of_birth: the date of birth of the employee, in format '%m/%d/%Y'
     """
     date_of_birth = datetime.strptime(date_of_birth, '%m/%d/%Y')
-    employee = Employee(name=name, department_id=department_id, role_id=role_id,
+    employee = Employee(name=name, surname=surname, department_id=department_id,
                         salary=salary, date_of_birth=date_of_birth)
     db.session.add(employee)
     db.session.commit()
 
 
-def update_employee(id, name, department_id, role_id, salary, date_of_birth):
+def update_employee(id, name, surname, department_id, salary, date_of_birth):
     """
     This function is used to update an existing employee
     :param id: the id of employee to update
     :param name: the name of the employee
+    :param surname: the surname of the employee
     :param department_id: the id of the related department
-    :param role_id: the id of the related role
     :param salary: the salary of the employee
     :param date_of_birth: the date of birth of the employee, in format '%m/%d/%Y'
     """
     employee = Employee.query.get_or_404(id)
     employee.name = name
+    employee.surname = surname
     employee.department_id = department_id
-    employee.role_id = role_id
     employee.salary = salary
     date_of_birth = datetime.strptime(date_of_birth, '%m/%d/%Y')
     employee.date_of_birth = date_of_birth

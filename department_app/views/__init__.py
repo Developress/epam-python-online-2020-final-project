@@ -8,7 +8,6 @@ user = Blueprint('user', __name__)
 
 # local imports
 from . import department_views
-from . import role_views
 from . import employee_views
 
 
