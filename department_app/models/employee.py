@@ -33,7 +33,7 @@ class Employee(db.Model):
         """
         return {
             'id': self.id, 'name': self.name, 'surname': self.surname,
-            'department': Department.query.get_or_404(self.department_id).name,
+            'department': Department.query.get_or_404(self.department_id).name if self.department_id is not None else None,
             'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
         }
 

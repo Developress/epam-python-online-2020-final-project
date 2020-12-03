@@ -59,7 +59,7 @@ def edit_employee(id):
         return redirect(url_for('user.show_employees'))
 
     # load employee.html template
-    return render_template('employees/employee.html', add=add, title="Add Employee")
+    return render_template('employees/employee.html', add=add, title="Edit Employee")
 
 
 @user.route('/employees/delete/<int:id>', methods=['GET', 'POST'])
