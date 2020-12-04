@@ -1,5 +1,4 @@
 import json
-import unittest
 
 from department_app import db
 from department_app.models.department import Department
@@ -59,7 +58,3 @@ class TestDepartmentApi(BaseTestCase):
     def test_abort_if_department_doesnt_exist(self):
         response = self.app.delete('/api/departments/10')
         self.assertEqual(404, response.status_code)
-
-
-if __name__ == '__main__':
-    unittest.main()

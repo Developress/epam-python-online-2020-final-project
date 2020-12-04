@@ -1,5 +1,4 @@
 import json
-import unittest
 from datetime import datetime
 
 from department_app import db
@@ -94,7 +93,3 @@ class TestEmployeeApi(BaseTestCase):
     def test_abort_if_employee_doesnt_exist(self):
         response = self.app.delete('/api/employees/10')
         self.assertEqual(404, response.status_code)
-
-
-if __name__ == '__main__':
-    unittest.main()
