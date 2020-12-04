@@ -2,8 +2,21 @@
 // add - to indicate whether the employee is being adding or editing
 let id = 0;
 let add = true;
+let departments = [];
 
-createDropDownList();
+fetch("/api/departments")
+    .then((response) => response.json())
+    .then((data)=> {
+        departments = getDepartmentList(data);
+        let select = document.getElementById('department');
+        for (const department of departments) {
+            var option = document.createElement("option");
+            option.value = department['id'];
+            option.text = department['name']
+            select.appendChild(option);
+        }
+    })
+    .catch((error) => console.log(error))
 
 if(document.title === "Edit Employee"){
     add = false;
@@ -27,8 +40,9 @@ function setValues(data){
     let surname = document.getElementById('surname');
     surname.setAttribute('value', data['surname']);
     // set the selected element of dropdown list
-    let departments = getDepartmentList(data);
-    for(const department in departments){
+    let departmentList = getDepartmentList(departments);
+    for(let i = 0; i < departmentList.length; i++) {
+        department = departmentList[i];
         if(department['name'] === data['department']){
             document.getElementById('department').value = department['id'];
             break;
@@ -40,24 +54,6 @@ function setValues(data){
     // get the date of birth input and set a value to it
     let date_of_birth = document.getElementById('datepicker');
     date_of_birth.value = data['date_of_birth'];
-    console.log(date_of_birth.value)
-}
-
-function createDropDownList(){
-    // get all the departments
-    fetch("/api/departments")
-    .then((response) => response.json())
-    .then((data)=> {
-        let departments = getDepartmentList(data);
-        let select = document.getElementById('department');
-        for (const department of departments) {
-            var option = document.createElement("option");
-            option.value = department['id'];
-            option.text = department['name']
-            select.appendChild(option);
-        }
-    })
-    .catch((error) => console.log(error))
 }
 
 function getDepartmentList(data){
