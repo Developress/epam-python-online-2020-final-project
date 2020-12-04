@@ -1,5 +1,5 @@
 // perform a GET request to receive all the employees
-fetch("http://localhost:5000/api/employees")
+fetch("/api/employees")
     .then((response) => response.json())
     .then((data)=> {
         // if the request was successful, call the function
@@ -106,7 +106,7 @@ function generateTable(table, data, keys) {
 
 function sendDeleteRequest(id){
     // perform a DELETE request to delete the specific employee
-    fetch(`http://localhost:5000/api/employees/${id}`, {
+    fetch(`/api/employees/${id}`, {
             method: 'DELETE'
         })
         .then((response) => response.json())
@@ -124,7 +124,7 @@ function getEmployeesBornOn(){
     while (table.rows.length > 0 ) {
         table.deleteRow(0);
     }
-    fetch('http://localhost:5000/api/employees?date=' + date)
+    fetch('/api/employees?date=' + date)
         .then((response) => response.json())
         .then((data)=> {
             console.log(data);
@@ -152,7 +152,7 @@ function getEmployeesBornBetween(){
     while (table.rows.length > 0 ) {
         table.deleteRow(0);
     }
-    fetch('http://localhost:5000/api/employees?start_date=' + start_date + "&end_date=" + end_date)
+    fetch('/api/employees?start_date=' + start_date + "&end_date=" + end_date)
         .then((response) => response.json())
         .then((data)=> {
             console.log(data);

@@ -10,7 +10,7 @@ if(document.title === "Edit Employee"){
     // get the id, which will be the last element of url
     id = document.URL.substring(document.URL.lastIndexOf('/') + 1);
     // perform a GET request to receive the needed department
-    fetch(`http://localhost:5000/api/employees/${id}`)
+    fetch(`/api/employees/${id}`)
         .then((response) => response.json())
         .then((data)=> {
             // set the input values
@@ -45,7 +45,7 @@ function setValues(data){
 
 function createDropDownList(){
     // get all the departments
-    fetch("http://localhost:5000/api/departments")
+    fetch("/api/departments")
     .then((response) => response.json())
     .then((data)=> {
         let departments = getDepartmentList(data);
@@ -94,7 +94,7 @@ function onSubmitClicked(){
     console.log(data)
     // if we are adding the element
     if(add){
-        fetch(`http://localhost:5000/api/employees`, {
+        fetch(`/api/employees`, {
                 method: 'POST',
                 headers: {
                   'Accept': 'application/json',
@@ -109,7 +109,7 @@ function onSubmitClicked(){
             })
             .catch((error) => console.log(error))
     } else {
-        fetch(`http://localhost:5000/api/employees/${id}`, {
+        fetch(`/api/employees/${id}`, {
                 method: 'PUT',
                 headers: {
                   'Accept': 'application/json',

@@ -8,7 +8,7 @@ if(document.title === "Edit Department"){
     // get the id, which will be the last element of url
     id = document.URL.substring(document.URL.lastIndexOf('/') + 1);
     // perform a GET request to receive the needed department
-    fetch(`http://localhost:5000/api/departments/${id}`)
+    fetch(`/api/departments/${id}`)
         .then((response) => response.json())
         .then((data)=> {
             // set the input values
@@ -38,7 +38,7 @@ function onSubmitClicked(){
     }
     // if we are adding the element
     if(add){
-        fetch(`http://localhost:5000/api/departments`, {
+        fetch(`/api/departments`, {
                 method: 'POST',
                 headers: {
                   'Accept': 'application/json',
@@ -53,7 +53,7 @@ function onSubmitClicked(){
             })
             .catch((error) => console.log(error))
     } else {
-        fetch(`http://localhost:5000/api/departments/${id}`, {
+        fetch(`/api/departments/${id}`, {
                 method: 'PUT',
                 headers: {
                   'Accept': 'application/json',

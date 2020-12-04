@@ -1,5 +1,5 @@
 // perform a GET request to receive all the departments
-fetch("http://ec2-52-206-188-118.compute-1.amazonaws.com/api/departments")
+fetch("/api/departments")
     .then((response) => response.json())
     .then((data)=> {
         // if the request was successful, call the function
@@ -117,7 +117,7 @@ function generateTable(table, data, keys) {
 
 function sendDeleteRequest(id){
     // perform a DELETE request to delete the specific department
-    fetch(`http://localhost:5000/api/departments/${id}`, {
+    fetch(`/api/departments/${id}`, {
             method: 'DELETE'
         })
         .then((response) => response.json())
