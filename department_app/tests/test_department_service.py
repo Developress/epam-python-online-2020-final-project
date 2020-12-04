@@ -28,9 +28,9 @@ class TestDepartmentService(BaseTestCase):
         db.session.add(department)
         db.session.commit()
         departments.update_department(1, name="new name", description="new description")
-        department1 = Department.query.get(1)
-        self.assertEqual("new name", department1.name)
-        self.assertEqual("new description", department1.description)
+        department = Department.query.get(1)
+        self.assertEqual("new name", department.name)
+        self.assertEqual("new description", department.description)
 
     def test_delete_department(self):
         department = Department(name="department1", description="description1")
