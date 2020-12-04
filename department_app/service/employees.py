@@ -94,5 +94,5 @@ def get_employee_by_id(id):
     :param id: the id of the employee to get
     :return: the employee with the specified id
     """
-    employee = Employee.query.get_or_404(id)
-    return employee.json()
+    employee = Employee.query.get(id)
+    return employee.json() if employee is not None else None
