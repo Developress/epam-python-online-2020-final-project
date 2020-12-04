@@ -76,5 +76,5 @@ def get_department_by_id(id):
     :param id: the id of the department to get
     :return: the department with the specified id
     """
-    department = Department.query.get_or_404(id)
-    return department.json()
+    department = Department.query.get(id)
+    return department.json() if department is not None else None
