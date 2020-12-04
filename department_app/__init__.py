@@ -8,7 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 # local imports
-from .config import app_config  # dictionary, keys of which are names of config, and values - the appropriate classes
+from config import app_config  # dictionary, keys of which are names of config, and values - the appropriate classes
 
 # db variable initialization
 db = SQLAlchemy()
