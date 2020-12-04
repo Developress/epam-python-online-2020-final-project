@@ -70,7 +70,7 @@ def get_employees_born_on(date):
     :param date: the date to filter with
     :return: the list of employees born on a specified date
     """
-    date = datetime.strptime(date, '\'%m/%d/%Y\'')
+    date = datetime.strptime(date, '\'%m/%d/%Y\'').date()
     employees = Employee.query.filter_by(date_of_birth=date)
     return [employee.json() for employee in employees]
 
@@ -82,8 +82,8 @@ def get_employees_born_between(start_date, end_date):
     :param end_date: the date to end comparison with
     :return: the list of employees born between specified end and start dates
     """
-    start_date = datetime.strptime(start_date, '\'%m/%d/%Y\'')
-    end_date = datetime.strptime(end_date, '\'%m/%d/%Y\'')
+    start_date = datetime.strptime(start_date, '\'%m/%d/%Y\'').date()
+    end_date = datetime.strptime(end_date, '\'%m/%d/%Y\'').date()
     employees = Employee.query.filter(Employee.date_of_birth.between(start_date, end_date))
     return [employee.json() for employee in employees]
 
@@ -94,5 +94,5 @@ def get_employee_by_id(id):
     :param id: the id of the employee to get
     :return: the employee with the specified id
     """
-    employee = Employee.query.get_or_404(id)
-    return employee.json()
+    employee = Employee.query.get(id)
+    return employee.json() if employee is not None else None

@@ -1,7 +1,7 @@
 # department_app/rest/employee_api.py
 
 # third-party imports
-from flask import abort, jsonify, request
+from flask import abort, jsonify, request, Response
 from flask_restful import reqparse, Resource
 
 # local imports
@@ -23,8 +23,8 @@ def abort_if_employee_doesnt_exist(id):
     This function is used to prevent the access of a resource that doesn't exist
     :param id: the id of the resource
     """
-    if employees_service.get_employee_by_id(id) not in employees_service.get_employees():
-        abort(404, message="Employee {} doesn't exist".format(id))
+    if employees_service.get_employee_by_id(id) is None:
+        abort(Response("Employee {} doesn't exist".format(id), 404))
 
 
 class EmployeeList(Resource):

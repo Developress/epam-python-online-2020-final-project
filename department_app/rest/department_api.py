@@ -1,7 +1,7 @@
 # department_app/rest/department_api.py
 
 # third-party imports
-from flask import abort, jsonify
+from flask import abort, jsonify, Response
 from flask_restful import reqparse, Resource
 
 # local imports
@@ -20,8 +20,8 @@ def abort_if_department_doesnt_exist(id):
     This function is used to prevent the access of a resource that doesn't exist
     :param id: the id of the resource
     """
-    if departments_service.get_department_by_id(id) not in departments_service.get_departments():
-        abort(404, message="Department {} doesn't exist".format(id))
+    if departments_service.get_department_by_id(id) is None:
+        abort(Response("Department {} doesn't exist".format(id), 404))
 
 
 class DepartmentList(Resource):

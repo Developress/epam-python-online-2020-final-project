@@ -39,6 +39,7 @@ class TestingConfig(Config):
     # Activates the testing mode of Flask extensions. This allows us to use testing properties
     # that could for instance have an increased runtime cost, such as unittest helpers.
     TESTING = True
+    SQLALCHEMY_ECHO = False
 
 
 app_config = {

@@ -36,10 +36,3 @@ class Employee(db.Model):
             'department': Department.query.get_or_404(self.department_id).name if self.department_id is not None else None,
             'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
         }
-
-    def __repr__(self):
-        """
-        The representation of the employee
-        :return: the string, representing the employee by his name
-        """
-        return '<Employee: {}>'.format(self.name + " " + self.surname)

@@ -31,10 +31,3 @@ class Department(db.Model):
             'description': self.description,
             'employees': [employee.json() for employee in self.employees]
         }
-
-    def __repr__(self):
-        """
-        The representation of the department
-        :return: the string, representing the department by its name
-        """
-        return '<Department: {}>'.format(self.name)
