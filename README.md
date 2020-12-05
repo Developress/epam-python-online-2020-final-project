@@ -28,3 +28,8 @@ and a search field to search for employees born on a
  
   Replace the \*config* with one of the values: *development*,
  *production*, *testing*
+ 
+ #### Set up the database
+ MySql must be installed. Go to the mysql console and 
+ create a new user:  
+ ```CREATE USER *user* IDENTIFIED BY *password* ```
