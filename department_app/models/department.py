@@ -1,4 +1,7 @@
 # department_app/models/department.py
+"""
+This module describes the db model class to work with departments
+"""
 
 # local imports
 from department_app import db
@@ -26,8 +29,16 @@ class Department(db.Model):
         This method is used to return the department in json format
         :return: the department in json format
         """
+        # pylint: disable=not-an-iterable
         return {
             'id': self.id, 'name': self.name,
             'description': self.description,
             'employees': [employee.json() for employee in self.employees]
         }
+
+    def __repr__(self):
+        """
+        The representation of the department
+        :return: the string, representing the department by its name
+        """
+        return '<Department: {}>'.format(self.name)

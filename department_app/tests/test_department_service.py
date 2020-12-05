@@ -88,3 +88,14 @@ class TestDepartmentService(BaseTestCase):
         db.session.add(department)
         db.session.commit()
         self.assertEqual(1, departments.get_department_by_id(1)['id'])
+
+    def test_department_representation(self):
+        """
+        Adds 1 test record and tests whether the string representation of
+        department is correct
+        :return:
+        """
+        department = Department(name="department1", description="description1")
+        db.session.add(department)
+        db.session.commit()
+        self.assertEqual('<Department: department1>', repr(department))

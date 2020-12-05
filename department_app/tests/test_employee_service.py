@@ -108,3 +108,15 @@ class TestEmployeeService(BaseTestCase):
         db.session.add(employee)
         db.session.commit()
         self.assertEqual(1, employees.get_employee_by_id(1)['id'])
+
+    def test_employee_representation(self):
+        """
+        Adds 1 test record and tests whether the string representation of
+        employee is correct
+        :return:
+        """
+        date = datetime.strptime('02/23/1990', '%m/%d/%Y').date()
+        employee = Employee(name="name1", surname="surname1", salary=100, date_of_birth=date)
+        db.session.add(employee)
+        db.session.commit()
+        self.assertEqual('<Employee: name1 surname1>', repr(employee))
