@@ -2,7 +2,7 @@
 """
 This module defines the test cases for department views
 """
-
+# pylint: disable=cyclic-import
 # local imports
 # pylint: disable=import-error
 from department_app import db

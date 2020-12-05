@@ -10,6 +10,7 @@ import logging
 import logging.config
 import yaml
 
+# pylint: disable=cyclic-import
 # pylint: disable=import-outside-toplevel
 # pylint: disable=unused-import
 # third-party imports

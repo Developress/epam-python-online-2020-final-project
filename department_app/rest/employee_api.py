@@ -2,7 +2,7 @@
 """
 This module defines a rest interface to work with employees
 """
-
+# pylint: disable=cyclic-import
 # third-party imports
 from flask import abort, jsonify, request, Response
 from flask_restful import reqparse, Resource

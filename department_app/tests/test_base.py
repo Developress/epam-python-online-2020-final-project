@@ -2,7 +2,7 @@
 """
 This module defines a BaseTestCase class which will be a parent for all test cases
 """
-
+# pylint: disable=cyclic-import
 # standard library imports
 import unittest
 import tempfile

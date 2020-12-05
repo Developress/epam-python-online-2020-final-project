@@ -2,7 +2,7 @@
 """
 This module defines the test cases for employee api
 """
-
+# pylint: disable=cyclic-import
 # standard library imports
 import json
 from datetime import datetime

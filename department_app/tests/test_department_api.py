@@ -2,7 +2,7 @@
 """
 This module defines the test cases for department api
 """
-
+# pylint: disable=cyclic-import
 # standard library imports
 import json
 

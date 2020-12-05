@@ -2,7 +2,7 @@
 """
 This module defines crud operations to work with departments table
 """
-
+# pylint: disable=cyclic-import
 # local imports
 from department_app import db
 from ..models.department import Department
