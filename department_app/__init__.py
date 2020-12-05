@@ -1,5 +1,12 @@
 # department_app/__init__.py
+"""
+This is the __init__.py file for department_app module.
+Imports all the necessary modules and submodules.
+Defines all the needed variables for proper app functioning
+"""
 
+# pylint: disable=import-outside-toplevel
+# pylint: disable=unused-import
 # third-party imports
 from flask import Flask
 from flask_bootstrap import Bootstrap
@@ -8,7 +15,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 
 # local imports
-from config import app_config  # dictionary, keys of which are names of config, and values - the appropriate classes
+# dictionary, keys of which are names of config, and values - the appropriate classes
+from config import app_config
 
 # db variable initialization
 db = SQLAlchemy()
@@ -22,13 +30,13 @@ def create_app(config_name):
     """
 
     # Tells the app that configuration files are relative to the instance folder.
-    # The instance folder is located outside the department_app package and can hold local data
-    # that shouldn't be committed to version control, such as configuration secrets and the database file.
+    # The instance folder is located outside the department_app package and can hold local data that
+    # shouldn't be committed to version control, such as config secrets and the database file.
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)
     # to create an api and register the routes
     from .rest import create_api
-    api = create_api(app)
+    create_api(app)
 
     app.config.from_object(app_config[config_name])
     app.config.from_pyfile('config.py')
@@ -36,7 +44,7 @@ def create_app(config_name):
     db.init_app(app)
 
     # initialize the object for migrations
-    migrate = Migrate(app, db)
+    Migrate(app, db)
 
     # initialize this to display flash messages
     Bootstrap(app)
