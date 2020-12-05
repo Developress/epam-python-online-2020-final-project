@@ -22,4 +22,4 @@ script:
 - pylint --load-plugins=pylint_flask,pylint_flask_sqlalchemy department_app
 
 #test coverage
-- coverage report --omit=*/env/*
+- coverage report --omit=*/virtualenv/*
