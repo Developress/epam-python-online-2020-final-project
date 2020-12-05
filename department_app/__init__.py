@@ -5,6 +5,9 @@ Imports all the necessary modules and submodules.
 Defines all the needed variables for proper app functioning
 """
 
+# standard library imports
+import logging
+
 # pylint: disable=import-outside-toplevel
 # pylint: disable=unused-import
 # third-party imports
@@ -28,6 +31,8 @@ def create_app(config_name):
     :param config_name: can be development, production or testing
     :return: the created flask app
     """
+
+    logging.basicConfig(filename='app.log', level=logging.DEBUG, filemode='w')
 
     # Tells the app that configuration files are relative to the instance folder.
     # The instance folder is located outside the department_app package and can hold local data that
