@@ -1,5 +1,10 @@
 # department_app/views/department_views.py
+"""
+This module represents the logic on routes starting with /departments
+"""
 
+# pylint: disable=cyclic-import
+# pylint: disable=unused-argument
 # third-party imports
 from flask import flash, render_template, request, redirect, url_for
 
@@ -39,8 +44,8 @@ def add_department():
     return render_template('departments/department.html', add=add, title="Add Department")
 
 
-@user.route('/departments/edit/<int:id>', methods=['GET'])
-def edit_department(id):
+@user.route('/departments/edit/<int:id_>', methods=['GET'])
+def edit_department(id_):
     """
     This function represents the logic on /departments/edit address
     :return: the rendered department.html template to edit an existing department
@@ -62,8 +67,8 @@ def edit_department(id):
     return render_template('departments/department.html', add=add, title="Edit Department")
 
 
-@user.route('/departments/delete/<int:id>', methods=['GET'])
-def delete_department(id):
+@user.route('/departments/delete/<int:id_>', methods=['GET'])
+def delete_department(id_):
     """
     This function represents the logic on /departments/delete address
     :return: the rendered departments.html template with deleted department
