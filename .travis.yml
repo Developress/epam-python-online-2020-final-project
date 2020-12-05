@@ -30,4 +30,4 @@ script:
 
 #deliver to dockerhub
 after_success:
-- sh .travis/docker_deliver.sh
+- sh docker_deliver.sh
