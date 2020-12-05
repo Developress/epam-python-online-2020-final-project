@@ -1,9 +1,13 @@
 # department_app/tests/test_employee_views.py
+"""
+This module defines the test cases for employee views
+"""
 
 # standard library imports
 from datetime import datetime
 
 # local imports
+# pylint: disable=import-error
 from department_app import db
 from department_app.models.employee import Employee
 from department_app.tests.test_base import BaseTestCase
@@ -13,12 +17,6 @@ class TestEmployeeViews(BaseTestCase):
     """
     This is the class for employee views test cases
     """
-    def setUp(self):
-        """
-        This method will be executed before every test case
-        """
-        super(TestEmployeeViews, self).setUp()
-
     def test_employees(self):
         """
         Tests whether the get request on employees page works correctly,
@@ -72,8 +70,8 @@ class TestEmployeeViews(BaseTestCase):
         Tests whether the get request on delete employee page works correctly,
         returning the status code 200
         """
-        date = datetime.strptime('02/23/1990', '%m/%d/%Y').date()
-        employee = Employee(name="name1", surname="surname1", salary=100, date_of_birth=date)
+        date = datetime.strptime('02/23/1997', '%m/%d/%Y').date()
+        employee = Employee(name="name1", surname="surname1", salary=210, date_of_birth=date)
         db.session.add(employee)
         db.session.commit()
         response = self.app.get('/employees/delete/1')

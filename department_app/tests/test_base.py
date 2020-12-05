@@ -1,10 +1,14 @@
 # department_app/tests/test_base.py
+"""
+This module defines a BaseTestCase class which will be a parent for all test cases
+"""
 
 # standard library imports
 import unittest
 import tempfile
 
 # local imports
+# pylint: disable=import-error
 from department_app import create_app, db
 
 
