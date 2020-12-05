@@ -7,15 +7,17 @@ Defines all the needed variables for proper app functioning
 
 # standard library imports
 import logging
+import logging.config
+import yaml
 
 # pylint: disable=import-outside-toplevel
 # pylint: disable=unused-import
 # third-party imports
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_cors import CORS
 
 # local imports
 # dictionary, keys of which are names of config, and values - the appropriate classes
@@ -32,7 +34,11 @@ def create_app(config_name):
     :return: the created flask app
     """
 
-    logging.basicConfig(filename='app.log', level=logging.DEBUG, filemode='w')
+    logging.config.dictConfig(yaml.load(open('logging.conf')))
+    logfile = logging.getLogger('file')
+    logconsole = logging.getLogger('console')
+    logfile.debug("Debug FILE")
+    logconsole.debug("Debug CONSOLE")
 
     # Tells the app that configuration files are relative to the instance folder.
     # The instance folder is located outside the department_app package and can hold local data that
