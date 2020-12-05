@@ -1,3 +1,7 @@
+sudo: required
+services:
+- docker
+
 language: python
 
 
@@ -22,4 +26,8 @@ script:
 - pylint --load-plugins=pylint_flask,pylint_flask_sqlalchemy department_app
 
 #test coverage
-- coverage report --omit=*/virtualenv/*
+- coverage report --omit=*/env/*
+
+#deliver to dockerhub
+after_success:
+- sh .travis/docker_deliver.sh
