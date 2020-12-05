@@ -1,4 +1,7 @@
 # department_app/rest/employee_api.py
+"""
+This module defines a rest interface to work with employees
+"""
 
 # third-party imports
 from flask import abort, jsonify, request, Response
@@ -18,13 +21,13 @@ parser.add_argument('salary')
 parser.add_argument('date_of_birth')
 
 
-def abort_if_employee_doesnt_exist(id):
+def abort_if_employee_doesnt_exist(id_):
     """
     This function is used to prevent the access of a resource that doesn't exist
-    :param id: the id of the resource
+    :param id_: the id of the resource
     """
-    if employees_service.get_employee_by_id(id) is None:
-        abort(Response("Employee {} doesn't exist".format(id), 404))
+    if employees_service.get_employee_by_id(id_) is None:
+        abort(Response("Employee {} doesn't exist".format(id_), 404))
 
 
 class EmployeeList(Resource):
@@ -32,7 +35,8 @@ class EmployeeList(Resource):
     This is the class for EmployeeList Resource available at /employees url
     """
 
-    def get(self):
+    @staticmethod
+    def get():
         """
         This method is called when GET request is sent
         :return: the list of all employees in json format
@@ -40,14 +44,16 @@ class EmployeeList(Resource):
         args = request.args
 
         if len(args) == 2:
-            return jsonify(employees_service.get_employees_born_between(start_date=args['start_date'],
-                                                                        end_date=args['end_date']))
-        elif len(args) == 1:
+            return jsonify(
+                employees_service.get_employees_born_between(start_date=args['start_date'],
+                                                             end_date=args['end_date']))
+        if len(args) == 1:
             return jsonify(employees_service.get_employees_born_on(date=args['date']))
 
         return jsonify(employees_service.get_employees())
 
-    def post(self):
+    @staticmethod
+    def post():
         """
         This method is called when POST request is sent
         :return: the 'Employee added' response with status code 201
@@ -64,33 +70,36 @@ class Employee(Resource):
     This is the class for Employee Resource available at /employees/<id> url
     """
 
-    def get(self, id):
+    @staticmethod
+    def get(id_):
         """
         This method is called when GET request is sent
         :return: the specific employee in json format
         """
-        abort_if_employee_doesnt_exist(id)
-        return jsonify(employees_service.get_employee_by_id(id))
+        abort_if_employee_doesnt_exist(id_)
+        return jsonify(employees_service.get_employee_by_id(id_))
 
-    def put(self, id):
+    @staticmethod
+    def put(id_):
         """
         This method is called when PUT request is sent
         :return: the 'Employee updated' response with status code 200
         """
         args = parser.parse_args()
-        employee = employees_service.get_employee_by_id(id)
-        employees_service.update_employee(id, args.get('name', employee['name']),
+        employee = employees_service.get_employee_by_id(id_)
+        employees_service.update_employee(id_, args.get('name', employee['name']),
                                           args.get('surname', employee['surname']),
                                           args.get('department', employee['department']),
                                           args.get('salary', employee['salary']),
                                           args.get('date_of_birth', employee['date_of_birth']))
         return "Employee updated", 200
 
-    def delete(self, id):
+    @staticmethod
+    def delete(id_):
         """
         This method is called when DELETE request is sent
         :return: the empty response with status code 204
         """
-        abort_if_employee_doesnt_exist(id)
-        employees_service.delete_employee(id)
+        abort_if_employee_doesnt_exist(id_)
+        employees_service.delete_employee(id_)
         return 'Employee deleted', 200
