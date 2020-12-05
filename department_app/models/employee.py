@@ -1,4 +1,7 @@
 # department_app/models/employee.py
+"""
+This module describes the db model class to work with employees
+"""
 
 # local imports
 from department_app import db
@@ -31,8 +34,17 @@ class Employee(db.Model):
         This method is used to return the employee in json format
         :return: the employee in json format
         """
+        # pylint: disable=no-member
         return {
             'id': self.id, 'name': self.name, 'surname': self.surname,
-            'department': Department.query.get_or_404(self.department_id).name if self.department_id is not None else None,
+            'department': Department.query.get_or_404(self.department_id).name
+            if self.department_id is not None else None,
             'salary': self.salary, 'date_of_birth': self.date_of_birth.strftime('%m/%d/%Y')
         }
+
+    def __repr__(self):
+        """
+        The representation of the employee
+        :return: the string, representing the employee by his name
+        """
+        return '<Employee: {}>'.format(self.name + " " + self.surname)

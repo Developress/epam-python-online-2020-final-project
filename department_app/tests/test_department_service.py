@@ -1,9 +1,13 @@
 # department_app/tests/test_department_service.py
+"""
+This module defines the test cases for department service
+"""
 
 # standard library imports
 from datetime import datetime
 
 # local imports
+# pylint: disable=import-error
 from department_app import db
 from department_app.models.department import Department
 from department_app.models.employee import Employee
@@ -15,12 +19,6 @@ class TestDepartmentService(BaseTestCase):
     """
     This is the class for department service test cases
     """
-    def setUp(self):
-        """
-        This method will be executed before every test case
-        """
-        super(TestDepartmentService, self).setUp()
-
     def test_get_departments(self):
         """
         Adds 2 test records and tests whether the count of records is 2
@@ -73,8 +71,10 @@ class TestDepartmentService(BaseTestCase):
         db.session.add(department)
         date1 = datetime.strptime('02/23/1990', '%m/%d/%Y').date()
         date2 = datetime.strptime('05/16/1996', '%m/%d/%Y').date()
-        employee1 = Employee(name="name1", surname="surname1", department_id=1, salary=100, date_of_birth=date1)
-        employee2 = Employee(name="name2", surname="surname2", department_id=1, salary=190, date_of_birth=date2)
+        employee1 = Employee(name="name1", surname="surname1", department_id=1,
+                             salary=100,date_of_birth=date1)
+        employee2 = Employee(name="name2", surname="surname2", department_id=1,
+                             salary=190, date_of_birth=date2)
         db.session.add(employee1)
         db.session.add(employee2)
         db.session.commit()
@@ -88,3 +88,14 @@ class TestDepartmentService(BaseTestCase):
         db.session.add(department)
         db.session.commit()
         self.assertEqual(1, departments.get_department_by_id(1)['id'])
+
+    def test_department_representation(self):
+        """
+        Adds 1 test record and tests whether the string representation of
+        department is correct
+        :return:
+        """
+        department = Department(name="department1", description="description1")
+        db.session.add(department)
+        db.session.commit()
+        self.assertEqual('<Department: department1>', repr(department))

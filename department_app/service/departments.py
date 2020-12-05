@@ -1,4 +1,7 @@
 # department_app/service/departments.py
+"""
+This module defines crud operations to work with departments table
+"""
 
 # local imports
 from department_app import db
@@ -26,26 +29,26 @@ def add_department(name, description):
     db.session.commit()
 
 
-def update_department(id, name, description):
+def update_department(id_, name, description):
     """
     This function is used to update an existing department
-    :param id: the id of the department to update
+    :param id_: the id of the department to update
     :param name: the name of the department to update
     :param description: the description of the department to update
     """
-    department = Department.query.get_or_404(id)
+    department = Department.query.get_or_404(id_)
     department.name = name
     department.description = description
     db.session.add(department)
     db.session.commit()
 
 
-def delete_department(id):
+def delete_department(id_):
     """
     This function is used to delete an existing department
-    :param id: the id of the department to delete
+    :param id_: the id of the department to delete
     """
-    department = Department.query.get_or_404(id)
+    department = Department.query.get_or_404(id_)
     db.session.delete(department)
     db.session.commit()
 
@@ -70,11 +73,11 @@ def get_average_salary(department):
     return average_salary
 
 
-def get_department_by_id(id):
+def get_department_by_id(id_):
     """
     This function is used to get the single department by id
-    :param id: the id of the department to get
+    :param id_: the id of the department to get
     :return: the department with the specified id
     """
-    department = Department.query.get(id)
+    department = Department.query.get(id_)
     return department.json() if department is not None else None

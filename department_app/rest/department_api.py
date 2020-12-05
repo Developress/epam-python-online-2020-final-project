@@ -1,4 +1,7 @@
 # department_app/rest/department_api.py
+"""
+This module defines a rest interface to work with departments
+"""
 
 # third-party imports
 from flask import abort, jsonify, Response
@@ -15,27 +18,29 @@ parser.add_argument('name')
 parser.add_argument('description')
 
 
-def abort_if_department_doesnt_exist(id):
+def abort_if_department_doesnt_exist(id_):
     """
     This function is used to prevent the access of a resource that doesn't exist
-    :param id: the id of the resource
+    :param id_: the id of the resource
     """
-    if departments_service.get_department_by_id(id) is None:
-        abort(Response("Department {} doesn't exist".format(id), 404))
+    if departments_service.get_department_by_id(id_) is None:
+        abort(Response("Department {} doesn't exist".format(id_), 404))
 
 
 class DepartmentList(Resource):
     """
     This is the class for DepartmentList Resource available at /departments url
     """
-    def get(self):
+    @staticmethod
+    def get():
         """
         This method is called when GET request is sent
         :return: the list of all departments in json format
         """
         return jsonify(departments_service.get_departments())
 
-    def post(self):
+    @staticmethod
+    def post():
         """
         This method is called when POST request is sent
         :return: the 'Department added' response with status code 201
@@ -49,30 +54,33 @@ class Department(Resource):
     """
     This is the class for Department Resource available at /departments/<id> url
     """
-    def get(self, id):
+    @staticmethod
+    def get(id_):
         """
         This method is called when GET request is sent
         :return: the specific department in json format
         """
-        abort_if_department_doesnt_exist(id)
-        return jsonify(departments_service.get_department_by_id(id))
+        abort_if_department_doesnt_exist(id_)
+        return jsonify(departments_service.get_department_by_id(id_))
 
-    def put(self, id):
+    @staticmethod
+    def put(id_):
         """
         This method is called when PUT request is sent
         :return: the 'Department updated' response with status code 200
         """
         args = parser.parse_args()
-        department = departments_service.get_department_by_id(id)
-        departments_service.update_department(id, args.get('name', department['name']),
+        department = departments_service.get_department_by_id(id_)
+        departments_service.update_department(id_, args.get('name', department['name']),
                                               args.get('description', department['description']))
         return "Department updated", 200
 
-    def delete(self, id):
+    @staticmethod
+    def delete(id_):
         """
         This method is called when DELETE request is sent
         :return: the empty response with status code 204
         """
-        abort_if_department_doesnt_exist(id)
-        departments_service.delete_department(id)
+        abort_if_department_doesnt_exist(id_)
+        departments_service.delete_department(id_)
         return 'Department deleted', 200

@@ -1,5 +1,10 @@
 # department_app/views/department_views.py
+"""
+This module represents the logic on routes starting with /employees
+"""
 
+# pylint: disable=cyclic-import
+# pylint: disable=unused-argument
 # third-party imports
 from flask import flash, render_template, request, redirect, url_for
 
@@ -39,8 +44,8 @@ def add_employee():
     return render_template('employees/employee.html', add=add, title="Add Employee")
 
 
-@user.route('/employees/edit/<int:id>', methods=['GET'])
-def edit_employee(id):
+@user.route('/employees/edit/<int:id_>', methods=['GET'])
+def edit_employee(id_):
     """
     This function represents the logic on /employees/edit address
     :return: the rendered employee.html template to edit an existing employee
@@ -62,8 +67,8 @@ def edit_employee(id):
     return render_template('employees/employee.html', add=add, title="Edit Employee")
 
 
-@user.route('/employees/delete/<int:id>', methods=['GET', 'POST'])
-def delete_employee(id):
+@user.route('/employees/delete/<int:id_>', methods=['GET', 'POST'])
+def delete_employee(id_):
     """
     This function represents the logic on /employees/delete address
     :return: the rendered employees.html template with deleted employee
@@ -73,4 +78,3 @@ def delete_employee(id):
 
     # redirect to employees.html after the element is deleted
     return redirect(url_for('user.show_employees'))
-

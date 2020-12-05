@@ -1,4 +1,9 @@
 # run.py
+"""
+This module creates a flask app with the given config by using the function create_app
+defined in department_app package. It takes config from FLASK_CONFIG environmental
+variable and runs the app on '0.0.0.0' host
+"""
 
 # standard library imports
 import os

@@ -1,9 +1,13 @@
 # department_app/tests/test_department_api.py
+"""
+This module defines the test cases for department api
+"""
 
 # standard library imports
 import json
 
 # local imports
+# pylint: disable=import-error
 from department_app import db
 from department_app.models.department import Department
 from department_app.tests.test_base import BaseTestCase
@@ -13,19 +17,13 @@ class TestDepartmentApi(BaseTestCase):
     """
     This is the class for department api test cases
     """
-    def setUp(self):
-        """
-        This method will be executed before every test case
-        """
-        super(TestDepartmentApi, self).setUp()
-
     def test_get_departments(self):
         """
         Adds 2 test records and tests whether the get request to /api/departments
         works correctly, returning the status code 200
         """
-        department1 = Department(name="department1", description="description1")
-        department2 = Department(name="department2", description="description2")
+        department1 = Department(name="Department1", description="description1")
+        department2 = Department(name="Department2", description="description2")
         db.session.add(department1)
         db.session.add(department2)
         db.session.commit()

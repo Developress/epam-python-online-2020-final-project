@@ -1,6 +1,10 @@
 # department_app/tests/test_department_views.py
+"""
+This module defines the test cases for department views
+"""
 
 # local imports
+# pylint: disable=import-error
 from department_app import db
 from department_app.models.department import Department
 from department_app.tests.test_base import BaseTestCase
@@ -10,12 +14,6 @@ class TestDepartmentViews(BaseTestCase):
     """
     This is the class for department views test cases
     """
-    def setUp(self):
-        """
-        This method will be executed before every test case
-        """
-        super(TestDepartmentViews, self).setUp()
-
     def test_homepage(self):
         """
         Tests whether the get request on homepage page works correctly,
