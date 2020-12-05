@@ -34,7 +34,7 @@ def create_app(config_name):
     :return: the created flask app
     """
 
-    logging.config.dictConfig(yaml.load(open('logging.conf')))
+    logging.config.dictConfig(yaml.load(open('logging.conf'), Loader=yaml.FullLoader))
     logfile = logging.getLogger('file')
     logconsole = logging.getLogger('console')
     logfile.debug("Debug FILE")
