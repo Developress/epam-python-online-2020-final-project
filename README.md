@@ -59,3 +59,4 @@ Replace the \*key*, \*user* and the \*password* with your own values
  ### Everything is ready! Run the app
  To launch the app just run:  
  ```flask run```
+ 
