@@ -1,0 +1,35 @@
+sudo: required
+services
+- docker
+
+
+language: python
+
+
+#dependencies
+install:
+- pip install -r requirements.txt
+
+
+#env variable to config flask
+before_script:
+  - export FLASK_APP="$TRAVIS_BUILD_DIR/run.py"
+  - export FLASK_CONFIG=development
+
+
+# commands to run tests
+script:
+
+# unit test
+- coverage run -m unittest discover department_app/tests
+
+# linting test
+- pylint --load-plugins=pylint_flask,pylint_flask_sqlalchemy department_app
+
+#test coverage
+- coverage report --omit=*/env/*
+
+
+#deliver to dockerhub
+after_success:
+- sh .travis/docker_deliver.sh
