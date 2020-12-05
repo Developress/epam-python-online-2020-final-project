@@ -1,8 +1,3 @@
-sudo: required
-services
-- docker
-
-
 language: python
 
 
@@ -28,8 +23,3 @@ script:
 
 #test coverage
 - coverage report --omit=*/env/*
-
-
-#deliver to dockerhub
-after_success:
-- sh .travis/docker_deliver.sh
