@@ -1,4 +1,7 @@
 # department_app/service/employees.py
+"""
+This module defines crud operations to work with departments table
+"""
 
 # standard library imports
 from datetime import datetime
@@ -33,17 +36,18 @@ def add_employee(name, surname, department_id, salary, date_of_birth):
     db.session.commit()
 
 
-def update_employee(id, name, surname, department_id, salary, date_of_birth):
+# pylint: disable=too-many-arguments
+def update_employee(id_, name, surname, department_id, salary, date_of_birth):
     """
     This function is used to update an existing employee
-    :param id: the id of employee to update
+    :param id_: the id of employee to update
     :param name: the name of the employee
     :param surname: the surname of the employee
     :param department_id: the id of the related department
     :param salary: the salary of the employee
     :param date_of_birth: the date of birth of the employee, in format '%m/%d/%Y'
     """
-    employee = Employee.query.get_or_404(id)
+    employee = Employee.query.get_or_404(id_)
     employee.name = name
     employee.surname = surname
     employee.department_id = department_id if department_id != '' else None
@@ -54,12 +58,12 @@ def update_employee(id, name, surname, department_id, salary, date_of_birth):
     db.session.commit()
 
 
-def delete_employee(id):
+def delete_employee(id_):
     """
     This function is used to delete an existing employee
-    :param id: the id of the employee to delete
+    :param id_: the id of the employee to delete
     """
-    employee = Employee.query.get_or_404(id)
+    employee = Employee.query.get_or_404(id_)
     db.session.delete(employee)
     db.session.commit()
 
@@ -88,11 +92,11 @@ def get_employees_born_between(start_date, end_date):
     return [employee.json() for employee in employees]
 
 
-def get_employee_by_id(id):
+def get_employee_by_id(id_):
     """
     This function is used to get the single employee by id
-    :param id: the id of the employee to get
+    :param id_: the id of the employee to get
     :return: the employee with the specified id
     """
-    employee = Employee.query.get(id)
+    employee = Employee.query.get(id_)
     return employee.json() if employee is not None else None
