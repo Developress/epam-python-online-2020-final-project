@@ -64,7 +64,61 @@ Replace the \*key*, \*user* and the \*password* with your own values
  ![1](documentation/img/homepage.png)
  
  ## What you can do
- Here is the list of available addresses:
+ ### Here is the list of available addresses of web service:
+ 
+ #### Departments api:
+ - GET /api/departments - return all departments in json format
+ - POST /api/departments - add a new department to the database (post request must be followed
+ with json with the fields to add). Example:  
+ ```json
+{
+'name': 'HR',
+'description': 'Information Technologies'
+}
+```
+- GET /api/departments/*id* - return the department with the given id 
+in json format
+- PUT /api/departments/*id* - updates the department with the given id
+with the values, provided in json format. Example:  
+ ```json
+{
+'name': 'HR'
+}
+```
+- DELETE /api/departments/*id* - deletes the department with the given id  
+   
+   #### Employees api
+ - GET /api/employees - return all employees in json format
+ - POST /api/employees - add a new employee to the database (post request must be followed
+ with json with the fields to add). Example:  
+ ```json
+{
+'name': 'Tom',
+'surname': 'Black',
+'salary': 500,
+'date_of_birth': '03/12/1998'
+}
+```
+Date must be in 'mm/dd/yyyy' format
+
+- GET /api/employees/*id* - return the employee with the given id 
+in json format
+- PUT /api/employees/*id* - updates the employee with the given id
+with the values, provided in json format. Example:  
+ ```json
+{
+'salary': 900
+}
+```
+- DELETE /api/employees/*id* - deletes the employee with the given id  
+- GET /api/employees?date='*date*' - searches employees born on a specific date (replace the *date* with some value)
+and returns them in json format
+- GET /api/employees?start_date='*start_date*'&end_date='*end_date*' - 
+  search employees born on a specific date range
+   (replace the *start_date* and *end_date* with some value) and returns
+   them in json format
+   
+ #### Here is the list of available addresses of web application:
  
  - /departments - display all the departments
  - /departments/add - add a new department
@@ -81,4 +135,4 @@ Replace the \*key*, \*user* and the \*password* with your own values
   search employees born on a specific date range
    (replace the *start_date* and *end_date* with some value)
    
-  For more details read the [specification]()
+  For more details read the [specification](documentation/SRS.md)
