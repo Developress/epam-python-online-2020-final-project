@@ -60,3 +60,25 @@ Replace the \*key*, \*user* and the \*password* with your own values
  To launch the app just run:  
  ```flask run```
  
+ ## If you see this page, everything has been installed successfully 
+ ![1](documentation/img/homepage.png)
+ 
+ ## What you can do
+ Here is the list of available addresses:
+ 
+ - /departments - display all the departments
+ - /departments/add - add a new department
+ - /departments/edit/*id* - edit a department with a specified id (replace the *id* with some value)
+ - /departments/delete/*id* - delete a department with a specified id (replace the *id* with some value)
+   
+   
+ - /employees - display all the employees
+ - /employees/add - add a new employee
+ - /employees/edit/*id* - edit an employee with a specified id (replace the *id* with some value)
+ - /employees/delete/*id* - delete an employee with a specified id (replace the *id* with some value)
+ - /employees?date='*date*' - search employees born on a specific date (replace the *date* with some value)
+  - /employees?start_date='*start_date*'&end_date='*end_date*' - 
+  search employees born on a specific date range
+   (replace the *start_date* and *end_date* with some value)
+   
+  For more details read the [specification]()
