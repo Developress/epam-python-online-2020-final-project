@@ -72,8 +72,8 @@ Replace the \*key*, \*user* and the \*password* with your own values
  with json with the fields to add). Example:  
  ```json
 {
-'name': 'HR',
-'description': 'Information Technologies'
+"name": "HR",
+"description": "Information Technologies"
 }
 ```
 - GET /api/departments/*id* - return the department with the given id 
@@ -82,7 +82,7 @@ in json format
 with the values, provided in json format. Example:  
  ```json
 {
-'name': 'HR'
+"name": "HR"
 }
 ```
 - DELETE /api/departments/*id* - deletes the department with the given id  
@@ -93,10 +93,10 @@ with the values, provided in json format. Example:
  with json with the fields to add). Example:  
  ```json
 {
-'name': 'Tom',
-'surname': 'Black',
-'salary': 500,
-'date_of_birth': '03/12/1998'
+"name": "Tom",
+"surname": "Black",
+"salary": 500,
+"date_of_birth": "03/12/1998"
 }
 ```
 Date must be in 'mm/dd/yyyy' format
@@ -107,7 +107,7 @@ in json format
 with the values, provided in json format. Example:  
  ```json
 {
-'salary': 900
+"salary": 900
 }
 ```
 - DELETE /api/employees/*id* - deletes the employee with the given id  
