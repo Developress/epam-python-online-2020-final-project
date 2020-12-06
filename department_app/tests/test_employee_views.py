@@ -2,7 +2,7 @@
 """
 This module defines the test cases for employee views
 """
-
+# pylint: disable=cyclic-import
 # standard library imports
 from datetime import datetime
 

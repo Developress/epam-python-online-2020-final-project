@@ -2,7 +2,6 @@
 """
 This module represents the logic on routes starting with /employees
 """
-
 # pylint: disable=cyclic-import
 # pylint: disable=unused-argument
 # third-party imports

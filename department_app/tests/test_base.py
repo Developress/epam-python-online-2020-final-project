@@ -2,7 +2,7 @@
 """
 This module defines a BaseTestCase class which will be a parent for all test cases
 """
-
+# pylint: disable=cyclic-import
 # standard library imports
 import unittest
 import tempfile
@@ -28,6 +28,7 @@ class BaseTestCase(unittest.TestCase):
         self.test_db_file = tempfile.mkstemp()[1]
         # specify the database connection string
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + self.test_db_file
+        app.config['SECRET_KEY'] = 'zsdjfh34bksdk333'
         with app.app_context():
             db.create_all()
         app.app_context().push()

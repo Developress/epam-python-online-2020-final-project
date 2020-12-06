@@ -2,7 +2,7 @@
 """
 This module defines crud operations to work with departments table
 """
-
+# pylint: disable=cyclic-import
 # standard library imports
 from datetime import datetime
 

@@ -3,6 +3,7 @@
 This is the __init__.py file of rest module.
 Imports the department_api and employee_api submodules and registers the api links
 """
+# pylint: disable=cyclic-import
 # third-party imports
 from flask_restful import Api
 

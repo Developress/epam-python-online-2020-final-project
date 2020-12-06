@@ -2,7 +2,7 @@
 """
 This module describes the db model class to work with departments
 """
-
+# pylint: disable=cyclic-import
 # local imports
 from department_app import db
 

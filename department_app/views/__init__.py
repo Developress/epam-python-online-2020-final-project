@@ -5,6 +5,7 @@ Imports the departments_views and employees_views submodules
 Registers the user blueprint.
 Specifies the logic on / address
 """
+# pylint: disable=cyclic-import
 # third-party imports
 from flask import Blueprint
 from flask import render_template
