@@ -53,7 +53,7 @@ function onSubmitClicked(){
             })
             .catch((error) => console.log(error))
     } else {
-        fetch(`pi/departments/${id}`, {
+        fetch(`/api/departments/${id}`, {
                 method: 'PUT',
                 headers: {
                   'Accept': 'application/json',
