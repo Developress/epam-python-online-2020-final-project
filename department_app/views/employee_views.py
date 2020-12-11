@@ -40,7 +40,7 @@ def add_employee():
         return redirect(url_for('user.show_employees'))
     elif added is not None and added == 'false':
         # form a flash message
-        flash('Couldn\'t add the employee. Missing data', 'error')
+        flash('Couldn\'t add the employee. Missing or invalid data', 'error')
 
         # redirect to department.html to enter the data again
         return redirect(url_for('user.add_employee'))

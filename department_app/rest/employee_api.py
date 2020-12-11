@@ -2,6 +2,9 @@
 """
 This module defines a rest interface to work with employees
 """
+# standard library imports
+import re
+
 # pylint: disable=cyclic-import
 # third-party imports
 from flask import abort, jsonify, request, Response
@@ -63,7 +66,9 @@ class EmployeeList(Resource):
                 or args['date_of_birth'] is None:
             abort(Response("Couldn't add employee. Missing data", 400))
         elif args['name'] == '' or args['surname'] == '' or args['salary'] == '' \
-                or args['date_of_birth'] == '' or int(args['salary']) < 0:
+                or args['date_of_birth'] == '' or int(args['salary']) < 0 \
+                or not bool(re.match(r'^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$',
+                                     args['date_of_birth'])):
             abort(Response("Couldn't add employee. Missing or invalid data", 400))
         else:
             employees_service.add_employee(args['name'], args['surname'],
@@ -95,7 +100,9 @@ class Employee(Resource):
         args = parser.parse_args()
         employee = employees_service.get_employee_by_id(id_)
         if args['name'] == '' or args['surname'] == '' or args['salary'] == '' or \
-           args['date_of_birth'] == '' or (args['salary'] is not None and int(args['salary']) < 0):
+            args['date_of_birth'] == '' or (args['salary'] is not None and int(args['salary']) < 0) \
+            or not bool(re.match(r'^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$',
+                                     args['date_of_birth'])):
             abort(Response("Couldn't edit employee. Missing or invalid data", 400))
         if args['name'] is None:
             args['name'] = employee['name']
