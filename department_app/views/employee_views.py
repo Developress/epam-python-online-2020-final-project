@@ -47,7 +47,7 @@ def add_employee():
 
         # redirect to employees.html after the element is added
         return redirect(url_for('user.show_employees'))
-    elif added is not None and added == 'false':
+    if added is not None and added == 'false':
         # form a flash message
         flash('Couldn\'t add the employee. Missing or invalid data', 'error')
 
@@ -76,7 +76,7 @@ def edit_employee(id_):
 
         # redirect to employees.html after the element is edited
         return redirect(url_for('user.show_employees'))
-    elif edited is not None and edited == 'false':
+    if edited is not None and edited == 'false':
         # form a flash message
         flash('Couldn\'t edit the employee. Missing or invalid data', 'error')
 

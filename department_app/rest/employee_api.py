@@ -25,6 +25,11 @@ parser.add_argument('date_of_birth')
 
 
 def validate_date(date):
+    """
+    This function checks whether th date matches the mm/dd/yyyy pattern
+    :param date: date to check
+    :return: true, if date matches the pattern, false if not
+    """
     return bool(re.match(r'^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$', date))
 
 
@@ -59,8 +64,8 @@ class EmployeeList(Resource):
             return jsonify(employees_service.get_employees_born_on(date=args['date']))
         if len(args) == 0:
             return jsonify(employees_service.get_employees())
-        else:
-            return abort(Response("Couldn't perform search. Invalid data", 400))
+
+        return abort(Response("Couldn't perform search. Invalid data", 400))
 
     @staticmethod
     def post():
@@ -73,8 +78,9 @@ class EmployeeList(Resource):
                 or args['date_of_birth'] is None:
             abort(Response("Couldn't add employee. Missing data", 400))
         elif args['name'] == '' or args['surname'] == '' or args['salary'] == '' \
-                or args['date_of_birth'] == '' or int(args['salary']) < 0 \
-                or not validate_date(args['date_of_birth']):
+                or args['date_of_birth'] == '':
+            abort(Response("Couldn't add employee. Missing or invalid data", 400))
+        elif int(args['salary']) < 0 or not validate_date(args['date_of_birth']):
             abort(Response("Couldn't add employee. Missing or invalid data", 400))
         else:
             employees_service.add_employee(args['name'], args['surname'],
@@ -106,10 +112,10 @@ class Employee(Resource):
         args = parser.parse_args()
         employee = employees_service.get_employee_by_id(id_)
         if args['name'] == '' or args['surname'] == '' or args['salary'] == '' or \
-                args['date_of_birth'] == '' or (args['salary'] is not None
-                                                and int(args['salary']) < 0) \
+                args['date_of_birth'] == '':
+            abort(Response("Couldn't edit employee. Missing or invalid data", 400))
+        if (args['salary'] is not None and int(args['salary']) < 0) \
                 or (args['date_of_birth'] is not None and not validate_date(args['date_of_birth'])):
-
             abort(Response("Couldn't edit employee. Missing or invalid data", 400))
 
         if args['name'] is None:

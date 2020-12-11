@@ -168,6 +168,42 @@ class TestEmployeeApi(BaseTestCase):
                                  content_type='application/json')
         self.assertEqual(400, response.status_code)
 
+    def test_adding_negative_salary(self):
+        """
+        Forms a json object with negative salary value and tests whether the post request to
+        /api/employees works correctly, returning the status code 400
+        """
+        employee = {
+            'name': 'name1',
+            'surname': 'surname1',
+            'salary': -1,
+            'date_of_birth': '02/23/1990'
+        }
+        response = self.app.post('/api/employees',
+                                 data=json.dumps(employee),
+                                 content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_editing_negative_salary(self):
+        """
+        Adds 1 test record, forms a json object with negative salary value values and tests
+        whether the put request to /api/employees/<id> works correctly, returning the status code 400
+        """
+        date = datetime.strptime('02/23/1990', '%m/%d/%Y').date()
+        employee = Employee(name="name1", surname="surname1", salary=100, date_of_birth=date)
+        db.session.add(employee)
+        db.session.commit()
+        employee = {
+            'name': 'name1_updated',
+            'surname': 'surname1_updated',
+            'salary': -1,
+            'date_of_birth': '02/23/1990'
+        }
+        response = self.app.put('/api/employees/1',
+                                data=json.dumps(employee),
+                                content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
     def test_editing_empty_values(self):
         """
         Adds 1 test record, forms a json object with empty values and tests whether the

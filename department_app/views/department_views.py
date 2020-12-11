@@ -39,7 +39,7 @@ def add_department():
         # redirect to departments.html after the element is added
         return redirect(url_for('user.show_departments'))
 
-    elif added is not None and added == 'false':
+    if added is not None and added == 'false':
         # form a flash message
         flash('Couldn\'t add the department. Missing data', 'error')
 
@@ -69,7 +69,7 @@ def edit_department(id_):
         # redirect to departments.html after the element is edited
         return redirect(url_for('user.show_departments'))
 
-    elif edited is not None and edited == 'false':
+    if edited is not None and edited == 'false':
         # form a flash message
         flash('Couldn\'t edit the department. Missing data', 'error')
 
