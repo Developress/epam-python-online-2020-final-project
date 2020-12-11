@@ -43,7 +43,7 @@ def add_department():
         # form a flash message
         flash('Couldn\'t add the department. Missing data', 'error')
 
-        # redirect to employees.html after the element is added
+        # redirect to department.html to enter the data again
         return redirect(url_for('user.add_department'))
 
     # load department.html template
@@ -73,7 +73,7 @@ def edit_department(id_):
         # form a flash message
         flash('Couldn\'t edit the department. Missing data', 'error')
 
-        # redirect to employees.html after the element is added
+        # redirect to department.html to enter the data again
         return redirect(url_for('user.edit_department', id_=id_))
 
     # load department.html template

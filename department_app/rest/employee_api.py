@@ -63,10 +63,8 @@ class EmployeeList(Resource):
                 or args['date_of_birth'] is None:
             abort(Response("Couldn't add employee. Missing data", 400))
         elif args['name'] == '' or args['surname'] == '' or args['salary'] == '' \
-                or args['date_of_birth'] == '':
-            abort(Response("Couldn't add employee. Missing data", 400))
-        elif int(args['salary']) < 0:
-            abort(Response("Salary must have a positive value", 400))
+                or args['date_of_birth'] == '' or int(args['salary']) < 0:
+            abort(Response("Couldn't add employee. Missing or invalid data", 400))
         else:
             employees_service.add_employee(args['name'], args['surname'],
                                            args['department'], args['salary'],
@@ -96,6 +94,18 @@ class Employee(Resource):
         """
         args = parser.parse_args()
         employee = employees_service.get_employee_by_id(id_)
+        if args['name'] == '' or args['surname'] == '' or args['salary'] == '' or \
+           args['date_of_birth'] == '' or (args['salary'] is not None and int(args['salary']) < 0):
+            abort(Response("Couldn't edit employee. Missing or invalid data", 400))
+        if args['name'] is None:
+            args['name'] = employee['name']
+        if args['surname'] is None:
+            args['surname'] = employee['surname']
+        if args['salary'] is None:
+            args['salary'] = employee['salary']
+        if args['date_of_birth'] is None:
+            args['date_of_birth'] = employee['date_of_birth']
+
         employees_service.update_employee(id_, args.get('name', employee['name']),
                                           args.get('surname', employee['surname']),
                                           args.get('department', employee['department']),

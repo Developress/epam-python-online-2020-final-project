@@ -42,7 +42,7 @@ def add_employee():
         # form a flash message
         flash('Couldn\'t add the employee. Missing data', 'error')
 
-        # redirect to employees.html after the element is added
+        # redirect to department.html to enter the data again
         return redirect(url_for('user.add_employee'))
 
     # load employee.html template
@@ -61,12 +61,18 @@ def edit_employee(id_):
     # get the edited argument if the form is submitted
     edited = request.args.get("edited")
 
-    if edited is not None:
+    if edited is not None and edited == 'true':
         # form a flash message
         flash('You have successfully edited the employee.')
 
         # redirect to employees.html after the element is edited
         return redirect(url_for('user.show_employees'))
+    elif edited is not None and edited == 'false':
+        # form a flash message
+        flash('Couldn\'t edit the employee. Missing or invalid data', 'error')
+
+        # redirect to employee.html to enter the data again
+        return redirect(url_for('user.edit_employee', id_=id_))
 
     # load employee.html template
     return render_template('employees/employee.html', add=add, title="Edit Employee")

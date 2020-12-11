@@ -121,6 +121,9 @@ function onSubmitClicked(){
                 // redirect to another page
                 window.location = `/employees/edit/${id}?edited=` + true;
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                // redirect to another page
+                window.location = `/employees/edit/${id}?edited=` + false;
+            })
     }
 }
