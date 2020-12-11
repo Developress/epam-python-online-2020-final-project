@@ -1,4 +1,5 @@
 <!-- department_app/templates/employee.html -->
+{% import "bootstrap/utils.html" as utils %}
 {% extends "base.html" %}
 {% block title %}
     {% if add %}
@@ -9,8 +10,14 @@
 {% endblock %}
 {% block body %}
 <main>
+    <script type="text/javascript">window.setTimeout("document.getElementById('flash').style.visibility='hidden';", 2000); </script>
     <!-- A main content -->
     <div class="container">
+        <div id="flash">
+            <br/>
+            {{ utils.flashed_messages() }}
+            <br/>
+        </div>
         <!-- A page heading -->
         {% if add %}
             <h1 class="text-center margin-top">Add employee</h1>

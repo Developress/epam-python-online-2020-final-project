@@ -51,7 +51,10 @@ function onSubmitClicked(){
                 // redirect to another page
                 window.location = '/departments/add?added=' + true;
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                // redirect to another page
+                window.location = '/departments/add?added=' + false;
+            })
     } else {
         fetch(`/api/departments/${id}`, {
                 method: 'PUT',
@@ -66,6 +69,9 @@ function onSubmitClicked(){
                 // redirect to another page
                 window.location = `/departments/edit/${id}?edited=` + true;
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                // redirect to another page
+                window.location = `/departments/edit/${id}?edited=` + false;
+            })
     }
 }

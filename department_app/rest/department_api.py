@@ -46,7 +46,12 @@ class DepartmentList(Resource):
         :return: the 'Department added' response with status code 201
         """
         args = parser.parse_args()
-        departments_service.add_department(args['name'], args['description'])
+        if args['name'] is None or args['description'] is None:
+            abort(Response("Couldn't add department. Missing data", 400))
+        elif args['name'] == '' or args['description'] == '':
+            abort(Response("Couldn't add department. Missing data", 400))
+        else:
+            departments_service.add_department(args['name'], args['description'])
         return "Department added", 201
 
 
@@ -71,6 +76,13 @@ class Department(Resource):
         """
         args = parser.parse_args()
         department = departments_service.get_department_by_id(id_)
+        if args['name'] == '' or args['description'] == '':
+            abort(Response("Couldn't edit department. Missing data", 400))
+        if args['name'] is None:
+            args['name'] = department['name']
+        if args['description'] is None:
+            args['description'] = department['description']
+
         departments_service.update_department(id_, args.get('name', department['name']),
                                               args.get('description', department['description']))
         return "Department updated", 200

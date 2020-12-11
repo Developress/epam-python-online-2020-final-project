@@ -135,3 +135,127 @@ class TestEmployeeApi(BaseTestCase):
         """
         response = self.app.delete('/api/employees/10')
         self.assertEqual(404, response.status_code)
+
+    def test_adding_none_values(self):
+        """
+        Forms a json object with none values and tests whether the post request to
+        /api/employees works correctly, returning the status code 400
+        """
+        employee = {
+            'name': None,
+            'surname': None,
+            'salary': None,
+            'date_of_birth': None
+        }
+        response = self.app.post('/api/employees',
+                                 data=json.dumps(employee),
+                                 content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_adding_empty_values(self):
+        """
+        Forms a json object with empty values and tests whether the post request to
+        /api/employees works correctly, returning the status code 400
+        """
+        employee = {
+            'name': '',
+            'surname': '',
+            'salary': '',
+            'date_of_birth': ''
+        }
+        response = self.app.post('/api/employees',
+                                 data=json.dumps(employee),
+                                 content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_adding_negative_salary(self):
+        """
+        Forms a json object with negative salary value and tests whether the post request to
+        /api/employees works correctly, returning the status code 400
+        """
+        employee = {
+            'name': 'name1',
+            'surname': 'surname1',
+            'salary': -1,
+            'date_of_birth': '02/23/1990'
+        }
+        response = self.app.post('/api/employees',
+                                 data=json.dumps(employee),
+                                 content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_editing_negative_salary(self):
+        """
+        Adds 1 test record, forms a json object with negative salary value values and tests
+        whether the put request to /api/employees/<id> works correctly, returning the status code 400
+        """
+        date = datetime.strptime('02/23/1990', '%m/%d/%Y').date()
+        employee = Employee(name="name1", surname="surname1", salary=100, date_of_birth=date)
+        db.session.add(employee)
+        db.session.commit()
+        employee = {
+            'name': 'name1_updated',
+            'surname': 'surname1_updated',
+            'salary': -1,
+            'date_of_birth': '02/23/1990'
+        }
+        response = self.app.put('/api/employees/1',
+                                data=json.dumps(employee),
+                                content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_editing_empty_values(self):
+        """
+        Adds 1 test record, forms a json object with empty values and tests whether the
+        put request to /api/employees/<id> works correctly, returning the status code 400
+        """
+        date = datetime.strptime('02/23/1990', '%m/%d/%Y').date()
+        employee = Employee(name="name1", surname="surname1", salary=100, date_of_birth=date)
+        db.session.add(employee)
+        db.session.commit()
+        employee = {
+            'name': '',
+            'surname': '',
+            'salary': '',
+            'date_of_birth': ''
+        }
+        response = self.app.put('/api/employees/1',
+                                data=json.dumps(employee),
+                                content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_editing_none_values(self):
+        """
+        Adds 1 test record, forms a json object with none values and tests whether the
+        put request to /api/employees/<id> works correctly, returning the status code 200
+        """
+        date = datetime.strptime('02/23/1990', '%m/%d/%Y').date()
+        employee = Employee(name="name1", surname="surname1", salary=100, date_of_birth=date)
+        db.session.add(employee)
+        db.session.commit()
+        employee = {
+            'name': None,
+            'surname': None,
+            'salary': None,
+            'date_of_birth': None
+        }
+        response = self.app.put('/api/employees/1',
+                                data=json.dumps(employee),
+                                content_type='application/json')
+        self.assertEqual(200, response.status_code)
+
+    def test_search_on_invalid_date(self):
+        """
+        Adds 2 test records and tests whether the get request to /api/employees
+        with invalid date parameter (search for employees born on specific date) works
+        correctly, returning the status code 400
+        """
+        date1 = datetime.strptime('05/15/1990', '%m/%d/%Y').date()
+        date2 = datetime.strptime('08/17/1996', '%m/%d/%Y').date()
+        employee1 = Employee(name="name1", surname="surname1", salary=135, date_of_birth=date1)
+        employee2 = Employee(name="name2", surname="surname2", salary=240, date_of_birth=date2)
+        db.session.add(employee1)
+        db.session.add(employee2)
+        db.session.commit()
+        response = self.app.get('/api/employees?date=\'05/23/1990sdfdsafz\'')
+        self.assertEqual(400, response.status_code)

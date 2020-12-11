@@ -83,10 +83,16 @@ function getEmployeesBornOn(){
                 // generate table, passing the table element, table data, and table headers
                 generateTable(table, dataToDisplay, Object.keys(dataToDisplay[0]), 'employees');
                 generateTableHead(table, Object.keys(dataToDisplay[0]).slice(1));
+            } else {
+                let h1 = document.querySelector("h1");
+                h1.innerHTML = "No employees were found";
             }
 
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+            // redirect to another page
+            window.location = `/employees?success=` + false;
+        })
 }
 
 function getEmployeesBornBetween(){
@@ -111,7 +117,13 @@ function getEmployeesBornBetween(){
                 // generate table, passing the table element, table data, and table headers
                 generateTable(table, dataToDisplay, Object.keys(dataToDisplay[0]), 'employees');
                 generateTableHead(table, Object.keys(dataToDisplay[0]).slice(1));
+            } else {
+                let h1 = document.querySelector("h1");
+                h1.innerHTML = "No employees were found";
             }
         })
-        .catch((error) => console.log(error))
+        .catch((error) => {
+            // redirect to another page
+            window.location = `/employees?success=` + false;
+        })
 }

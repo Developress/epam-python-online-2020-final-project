@@ -17,6 +17,15 @@ def show_employees():
     This function renders the employees template on the /employees route
     :return: the rendered employees.html template
     """
+    success = request.args.get("success")
+
+    if success is not None and success == 'false':
+        # form a flash message
+        flash('Wrong input data. Try again', 'error')
+
+        # redirect to employees.html
+        return redirect(url_for('user.show_employees'))
+
     return render_template('employees/employees.html', title='Employees')
 
 
@@ -32,12 +41,18 @@ def add_employee():
     # get the added argument if the form is submitted
     added = request.args.get("added")
 
-    if added is not None:
+    if added is not None and added == 'true':
         # form a flash message
         flash('You have successfully added the employee.')
 
         # redirect to employees.html after the element is added
         return redirect(url_for('user.show_employees'))
+    if added is not None and added == 'false':
+        # form a flash message
+        flash('Couldn\'t add the employee. Missing or invalid data', 'error')
+
+        # redirect to department.html to enter the data again
+        return redirect(url_for('user.add_employee'))
 
     # load employee.html template
     return render_template('employees/employee.html', add=add, title="Add Employee")
@@ -55,12 +70,18 @@ def edit_employee(id_):
     # get the edited argument if the form is submitted
     edited = request.args.get("edited")
 
-    if edited is not None:
+    if edited is not None and edited == 'true':
         # form a flash message
         flash('You have successfully edited the employee.')
 
         # redirect to employees.html after the element is edited
         return redirect(url_for('user.show_employees'))
+    if edited is not None and edited == 'false':
+        # form a flash message
+        flash('Couldn\'t edit the employee. Missing or invalid data', 'error')
+
+        # redirect to employee.html to enter the data again
+        return redirect(url_for('user.edit_employee', id_=id_))
 
     # load employee.html template
     return render_template('employees/employee.html', add=add, title="Edit Employee")
