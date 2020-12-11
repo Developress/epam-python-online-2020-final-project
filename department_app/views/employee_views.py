@@ -32,12 +32,18 @@ def add_employee():
     # get the added argument if the form is submitted
     added = request.args.get("added")
 
-    if added is not None:
+    if added is not None and added == 'true':
         # form a flash message
         flash('You have successfully added the employee.')
 
         # redirect to employees.html after the element is added
         return redirect(url_for('user.show_employees'))
+    elif added is not None and added == 'false':
+        # form a flash message
+        flash('Couldn\'t add the employee. Missing data', 'error')
+
+        # redirect to employees.html after the element is added
+        return redirect(url_for('user.add_employee'))
 
     # load employee.html template
     return render_template('employees/employee.html', add=add, title="Add Employee")

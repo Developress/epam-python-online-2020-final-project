@@ -103,7 +103,10 @@ function onSubmitClicked(){
                 // redirect to another page
                 window.location = '/employees/add?added=' + true;
             })
-            .catch((error) => console.log(error))
+            .catch((error) => {
+                // redirect to another page
+                window.location = '/employees/add?added=' + false;
+            })
     } else {
         fetch(`/api/employees/${id}`, {
                 method: 'PUT',

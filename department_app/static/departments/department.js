@@ -66,6 +66,6 @@ function onSubmitClicked(){
                 // redirect to another page
                 window.location = `/departments/edit/${id}?edited=` + true;
             })
-            .catch((error) => console.log(error))
+            .catch((error) => console.log(JSON.parse(error))
     }
 }

@@ -59,9 +59,19 @@ class EmployeeList(Resource):
         :return: the 'Employee added' response with status code 201
         """
         args = parser.parse_args()
-        employees_service.add_employee(args['name'], args['surname'],
-                                       args['department'], args['salary'],
-                                       args['date_of_birth'])
+        if args['name'] is None or args['surname'] is None or args['salary'] is None \
+                or args['date_of_birth'] is None:
+            abort(Response("Couldn't add employee. Missing data", 400))
+
+        elif args['name'] == '' or args['surname'] == '' or args['salary'] == '' \
+                or args['date_of_birth'] == '':
+            abort(Response("Couldn't add employee. Missing data", 400))
+        elif int(args['salary']) < 0:
+            abort(Response("Salary must have a positive value", 400))
+        else:
+            employees_service.add_employee(args['name'], args['surname'],
+                                           args['department'], args['salary'],
+                                           args['date_of_birth'])
         return "Employee added", 201
 
 

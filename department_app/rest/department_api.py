@@ -46,7 +46,10 @@ class DepartmentList(Resource):
         :return: the 'Department added' response with status code 201
         """
         args = parser.parse_args()
-        departments_service.add_department(args['name'], args['description'])
+        if args['name'] is None or args['description'] is None:
+            abort(Response("Couldn't add department. Missing data", 400))
+        else:
+            departments_service.add_department(args['name'], args['description'])
         return "Department added", 201
 
 
