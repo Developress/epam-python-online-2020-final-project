@@ -46,6 +46,14 @@ class TestDepartmentViews(BaseTestCase):
         response = self.app.get('/departments/add?added=true')
         self.assertEqual(302, response.status_code)
 
+    def test_department_not_added(self):
+        """
+        Tests whether the get request on add department page works correctly,
+        and redirects to department page, returning the status code 302
+        """
+        response = self.app.get('/departments/add?added=false')
+        self.assertEqual(302, response.status_code)
+
     def test_edit_department(self):
         """
         Tests whether the get request on edit department page works correctly,
@@ -66,6 +74,17 @@ class TestDepartmentViews(BaseTestCase):
         db.session.add(department)
         db.session.commit()
         response = self.app.get('/departments/edit/1?edited=true')
+        self.assertEqual(302, response.status_code)
+
+    def test_department_not_edited(self):
+        """
+        Tests whether the get request on edit department page works correctly,
+        and redirects to department page, returning the status code 302
+        """
+        department = Department(name="department1", description="description1")
+        db.session.add(department)
+        db.session.commit()
+        response = self.app.get('/departments/edit/1?edited=false')
         self.assertEqual(302, response.status_code)
 
     def test_delete_department(self):

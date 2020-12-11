@@ -90,3 +90,82 @@ class TestDepartmentApi(BaseTestCase):
         """
         response = self.app.delete('/api/departments/10')
         self.assertEqual(404, response.status_code)
+
+    def test_adding_none_values(self):
+        """
+        Forms a json object with none values and tests whether the post request to
+        /api/departments works correctly, returning the status code 400
+        """
+        department = {
+            'name': None,
+            'description': None
+        }
+        response = self.app.post('/api/departments',
+                                 data=json.dumps(department),
+                                 content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_adding_empty_values(self):
+        """
+        Forms a json object with empty values and tests whether the post request to
+        /api/departments works correctly, returning the status code 400
+        """
+        department = {
+            'name': '',
+            'description': ''
+        }
+        response = self.app.post('/api/departments',
+                                 data=json.dumps(department),
+                                 content_type='application/json')
+        self.assertEqual(400, response.status_code)
+
+    def test_editing_none_name(self):
+        """
+        Adds 1 test record, forms a json object with none name value and tests whether the
+        put request to /api/departments/<id> works correctly, returning the status code 200
+        """
+        department = Department(name="department1", description="description1")
+        db.session.add(department)
+        db.session.commit()
+        department = {
+            'name': None,
+            'description': 'description1_update'
+        }
+        response = self.app.put('/api/departments/1',
+                                data=json.dumps(department),
+                                content_type='application/json')
+        self.assertEqual(200, response.status_code)
+
+    def test_editing_none_description(self):
+        """
+        Adds 1 test record, forms a json object with none description value and tests whether the
+        put request to /api/departments/<id> works correctly, returning the status code 200
+        """
+        department = Department(name="department1", description="description1")
+        db.session.add(department)
+        db.session.commit()
+        department = {
+            'name': 'name1_update',
+            'description': None
+        }
+        response = self.app.put('/api/departments/1',
+                                data=json.dumps(department),
+                                content_type='application/json')
+        self.assertEqual(200, response.status_code)
+
+    def test_editing_empty_description(self):
+        """
+        Adds 1 test record, forms a json object with empty description value and tests whether the
+        put request to /api/departments/<id> works correctly, returning the status code 400
+        """
+        department = Department(name="department1", description="description1")
+        db.session.add(department)
+        db.session.commit()
+        department = {
+            'name': 'name1_update',
+            'description': ''
+        }
+        response = self.app.put('/api/departments/1',
+                                data=json.dumps(department),
+                                content_type='application/json')
+        self.assertEqual(400, response.status_code)

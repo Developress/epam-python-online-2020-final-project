@@ -106,9 +106,12 @@ class Employee(Resource):
         args = parser.parse_args()
         employee = employees_service.get_employee_by_id(id_)
         if args['name'] == '' or args['surname'] == '' or args['salary'] == '' or \
-                args['date_of_birth'] == '' or (args['salary'] is not None and int(args['salary']) < 0) \
-                or not validate_date(args['date_of_birth']):
+                args['date_of_birth'] == '' or (args['salary'] is not None
+                                                and int(args['salary']) < 0) \
+                or (args['date_of_birth'] is not None and not validate_date(args['date_of_birth'])):
+
             abort(Response("Couldn't edit employee. Missing or invalid data", 400))
+
         if args['name'] is None:
             args['name'] = employee['name']
         if args['surname'] is None:
