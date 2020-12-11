@@ -10,11 +10,14 @@
 {% endblock %}
 {% block body %}
 <main>
+    <script type="text/javascript">window.setTimeout("document.getElementById('flash').style.visibility='hidden';", 2000); </script>
     <!-- A main content -->
     <div class="container">
-        <br/>
-        {{ utils.flashed_messages() }}
-        <br/>
+        <div id="flash">
+            <br/>
+            {{ utils.flashed_messages() }}
+            <br/>
+        </div>
         <!-- A page heading -->
         {% if add %}
             <h1 class="text-center margin-top">Add department</h1>

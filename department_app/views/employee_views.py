@@ -17,6 +17,15 @@ def show_employees():
     This function renders the employees template on the /employees route
     :return: the rendered employees.html template
     """
+    success = request.args.get("success")
+
+    if success is not None and success == 'false':
+        # form a flash message
+        flash('Wrong input data. Try again', 'error')
+
+        # redirect to employees.html
+        return redirect(url_for('user.show_employees'))
+
     return render_template('employees/employees.html', title='Employees')
 
 

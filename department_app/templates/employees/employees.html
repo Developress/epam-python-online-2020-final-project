@@ -6,11 +6,14 @@
 <main>
     <!-- A script which will be executed when the page is loaded -->
     <script src="{{ url_for('static', filename='employees/employees.js') }}"></script>
+    <script type="text/javascript">window.setTimeout("document.getElementById('flash').style.visibility='hidden';", 2000); </script>
     <!-- A main content -->
     <div class="container">
-        <br/>
-        {{ utils.flashed_messages() }}
-        <br/>
+        <div id="flash">
+            <br/>
+            {{ utils.flashed_messages() }}
+            <br/>
+        </div>
         <!-- A page heading -->
         <h1 class="text-center margin-top">Employees</h1>
         <!-- A flex container for dates panel -->
